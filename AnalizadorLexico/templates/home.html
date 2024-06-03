@@ -1,5 +1,21 @@
 {% extends '_base.html' %}
 {% load static %}
 {% block content %}
-    <p class="text-3xl">Migo Test</p>
+    <div class="my-20 mx-16 flex">
+        <div class="w-3/2 flex flex-col">
+            <span class="text-3xl">Sobre Nosotros</span>
+            <p class="mx-5 text-xl">grupo de amigos que diseña un fucking compilador</p>
+        </div>
+        <div class="w-64 carousel rounded-box">
+            <div class="carousel-item w-full">
+                <img src="https://i.scdn.co/image/ab67616d00001e026275aeac316378b0dd4f31fd" alt="Album"/>
+            </div>
+            <div class="carousel-item w-full">
+                <img src="https://i.scdn.co/image/ab67616d00001e029c188c494d8bfaf895411890" alt="Album"/>
+            </div>
+            <div class="carousel-item w-full">
+                <img src="https://i.scdn.co/image/ab67616d00001e02f89d00155b6a066650e5460d" alt="Album"/>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

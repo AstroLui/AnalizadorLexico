@@ -3,7 +3,12 @@ import daisyui from "daisyui"
 module.exports = {
   content: ["./AnalizadorLexico/templates/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: 
+      {
+        'display': 'display',
+      }
+    },
   },
   plugins: [
     daisyui,
