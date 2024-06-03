@@ -1,8 +1,9 @@
 import ply.lex as lex
 
-reservadas = {'IF': 'if', 'ELSE': 'else', 'GET': 'get', 'INT': 'int', 'FLOAT': 'float'}
+reservadas = {'IF': 'if', 'ELSE': 'else', 'GET': 'get', 'INT': 'int', 'FLOAT': 'float', 'TRUE':'true', 'FALSE':'false'}
 tokens = list(reservadas.keys()) + ['ID', 'NUMERO', 'STRING', 'ASIGNAR', 'SUMA', 'RESTA', 'DIV', 'MULT', 'COMA', 'PUNTO', 'MENOR', 'MAYOR', 'MODULO', 'MASMAS', 'MENOSMENOS', 'IGUAL', 
-                                    'MAYOR_IGUAL', 'MENOR_IGUAL', 'DIFERENTE', 'AND', 'OR', 'NOT']
+                                    'MAYOR_IGUAL', 'MENOR_IGUAL', 'DIFERENTE', 'AND', 'OR', 'NOT', 'PARENT_DER', 'PARENT_IZQ', 'CORCHETE_DER', 'CORCHETE_IZQ', 'LLAVE_DER', 'LLAVE_IZQ',
+                                    'PUNTOCOMA']
 
 t_SUMA = r'\+'
 t_RESTA = r'\-'
@@ -22,6 +23,14 @@ t_DIFERENTE = r'\!='
 t_AND = r'\&&'
 t_OR = r'\|\|'
 t_NOT = r'\!'
+t_PARENT_DER = r'\)'
+t_PARENT_IZQ = r'\('
+t_CORCHETE_DER = r'\]'
+t_CORCHETE_IZQ = r'\['
+t_LLAVE_DER = r'\}'
+t_LLAVE_IZQ = r'\{'
+t_PUNTO = r'\.'
+t_PUNTOCOMA = r'\;'
 t_ignore = r' \n'
 
 def t_NUMERO(t):
@@ -42,6 +51,14 @@ def t_STRING(t):
     t.value = t.value[1:-1]
     return t
 
+def t_TRUE(t):
+    r'true'
+    return t
+
+def t_FALSE(t):
+    r'false'
+    return t
+
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     return t
@@ -56,7 +73,7 @@ def t_error(t):
 lexer = lex.lex()
 
 
-data = "if else jota123 = 3, + 4 * 2 && ||"
+data = "(if else jota123 = 3, + 4 * 2 && || != true;.)" 
 lexer.input(data)
 
 while True:
