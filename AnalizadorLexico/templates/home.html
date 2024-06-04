@@ -1,12 +1,17 @@
 {% extends '_base.html' %}
 {% load static %}
 {% block content %}
-    <div class="my-20 mx-16 flex">
-        <div class="w-3/2 flex flex-col">
+    <div class="my-10 mx-16 flex">
+        <div class="flex-1 flex-col">
             <span class="text-3xl">Sobre Nosotros</span>
-            <p class="mx-5 text-xl">grupo de amigos que diseña un fucking compilador</p>
+            <p class="mx-5 my-4 text-xl font-thin">
+                Migos se trata de un trío proveniente de Lawrenceville (Georgia, Estados Unidos) que canta hip-hop. 
+                Sus integrantes son conocidos en el medio artístico como Quavo, Offset y Takeoff. Mientras que estuvieron 
+                en la secundaria estos tres empezaron a rapear en su tiempo libre. Sin embargo, esto no era lo único que 
+                hacían en esas horas, sino que también se enredaron en el tráfico de drogas, lo cual lo revelan en su canción titulada Bando. De manera que se especula que el nombre con el que actualmente se les conoce “Migos” es en honor a una casa de estupefacientes. Aunque muchos otros entienden por ese nombre la abreviatura de la palabra “amigos”, lo que hace referencia al lazo sanguíneo y fraternal que los une.
+            </p>
         </div>
-        <div class="w-64 carousel rounded-box">
+        <div class="w-64 flex-none carousel rounded-box">
             <div class="carousel-item w-full">
                 <img src="https://i.scdn.co/image/ab67616d00001e026275aeac316378b0dd4f31fd" alt="Album"/>
             </div>
@@ -18,4 +23,15 @@
             </div>
         </div>
     </div>
+    <span class="mx-16 text-3xl">Compilador</span>
+    <div class="flex gap-10 items-center">
+        <div class="ml-20 my-6 w-4/12 h-72 rounded-lg bg-base-content overflow-hidden">
+            <textarea id="code" name="code">Code Here</textarea>
+        </div>
+        <button class="btn btn-outline w-auto h-auto p-4 text-xl">Compilar</button>
+        <div class="my-6 w-4/12 rounded-lg h-72 overflow-hidden">
+            <textarea id="result" style="width: 1000px" class="outline-none h-80 p-2" disabled></textarea>
+        </div>
+    </div>
+    <script src="{% static 'js/JoyHome.js' %}"></script>
 {% endblock content %}

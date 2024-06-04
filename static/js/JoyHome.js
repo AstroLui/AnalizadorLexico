@@ -9,3 +9,11 @@ function openMenu()
     :
         menu.classList.add('hidden')
 }
+var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    // muestro las líneas de código
+    lineNumbers: true,
+    // elijo el tema
+    theme: 'icecoder',
+    mode: 'python',
+    // esto deshabilita la opción de reescribir
+  });
