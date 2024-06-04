@@ -72,13 +72,14 @@ def t_error(t):
 
 lexer = lex.lex()
 
-
-data = "(if else jota123 = 3, + 4 * 2 && || != true;.)" 
-lexer.input(data)
-
-while True:
-    token = lexer.token()
-    if not token:
-        break
-    print(f"Tipo: {token.type}, Lexema: ({token.value}), Posición: {token.lexpos}")
+def Data(datos):
+    data = datos
+    lexer.input(data)
+    stringData = ""
+    while True:
+        token = lexer.token()
+        if not token:
+            break
+        stringData += (f"Tipo: {token.type}, Lexema: ( {token.value} )\n")
+    return stringData
 

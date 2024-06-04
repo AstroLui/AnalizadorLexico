@@ -14,6 +14,29 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     lineNumbers: true,
     // elijo el tema
     theme: 'icecoder',
-    mode: 'python',
+    mode: 'javascript',
     // esto deshabilita la opción de reescribir
-  });
+});
+
+
+function Compilar()
+{
+    var datos = editor.getValue()
+    var request = new Request('resultado', 
+    {
+        method: 'POST',
+        body: JSON.stringify({ data : datos}),
+        headers: new Headers()
+    });
+    fetch(request)
+    .then(response => response.json())
+    .then(data =>
+        {
+            document.getElementById('result').value = data['data'];
+        })
+    .catch(error =>{
+        console.log(error);
+    })
+
+}
+
