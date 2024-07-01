@@ -1,38 +1,20 @@
 {% extends '_base.html' %}
 {% csrf_token %}
 {% load static %}
+
 {% block content %}
-    <div class="my-10 mx-16 flex">
-        <div class="flex-1 flex-col">
-            <span class="text-3xl">Sobre Nosotros</span>
-            <p class="mx-5 my-4 text-xl font-thin">
-                Migos se trata de un trío proveniente de Lawrenceville (Georgia, Estados Unidos) que canta hip-hop. 
-                Sus integrantes son conocidos en el medio artístico como Quavo, Offset y Takeoff. Mientras que estuvieron 
-                en la secundaria estos tres empezaron a rapear en su tiempo libre. Sin embargo, esto no era lo único que 
-                hacían en esas horas, sino que también se enredaron en el tráfico de drogas, lo cual lo revelan en su canción titulada Bando. De manera que se especula que el nombre con el que actualmente se les conoce “Migos” es en honor a una casa de estupefacientes. Aunque muchos otros entienden por ese nombre la abreviatura de la palabra “amigos”, lo que hace referencia al lazo sanguíneo y fraternal que los une.
-            </p>
-        </div>
-        <div class="w-64 flex-none carousel rounded-box">
-            <div class="carousel-item w-full">
-                <img src="https://i.scdn.co/image/ab67616d00001e026275aeac316378b0dd4f31fd" alt="Album"/>
+    <div class="m-3 mt-5 p-2 container h-5/6">
+        <div class="container flex flex-row items-center justify-center gap-5 h-full">
+            <div class="container w-2/4 h-full p-3" id="codeSpace">
+                <textarea class="textarea textarea-bordered textarea-md w-full h-full">Codigo Aqui</textarea>
             </div>
-            <div class="carousel-item w-full">
-                <img src="https://i.scdn.co/image/ab67616d00001e029c188c494d8bfaf895411890" alt="Album"/>
-            </div>
-            <div class="carousel-item w-full">
-                <img src="https://i.scdn.co/image/ab67616d00001e02f89d00155b6a066650e5460d" alt="Album"/>
+            <div class="container w-2/4 h-full p-3">
+                <div class="mockup-code w-full h-full text-base" id="codeSpaceMirror">
+                    <div>
+                        <pre data-prefix="1"><code>Resultado Aqui</code></pre>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <span class="mx-16 text-3xl">Compilador</span>
-    <div class="ml-20 my-6 flex gap-10 items-center">
-        <div class=" w-4/12 h-72 rounded-lg bg-base-content overflow-hidden">
-            <textarea id="code" name="code">Code Here</textarea>
-        </div>
-        <button class="btn btn-outline w-auto h-auto p-4 text-xl" onclick="Compilar();">Compilar</button>
-        <div class="my-6 w-4/12 rounded-lg h-72 overflow-hidden ring-1 ring-base-content">
-            <textarea id="result" style="width: 1000px" class="outline-none h-80 p-3 " disabled></textarea>
-        </div>
-    </div>
-    <script src="{% static 'js/JoyHome.js' %}"></script>
 {% endblock content %}

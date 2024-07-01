@@ -4,29 +4,23 @@ module.exports = {
   content: ["./AnalizadorLexico/templates/**/*.{html,js}"],
   theme: {
     extend: {
-      transitionProperty: 
-      {
-        'display': 'display',
+      fontFamily: {
+        'culpa': ['"Mea Culpa"'],
+        'inter':['"Inter Tight"']
       }
     },
+    colors: {
+      'luxury': '#F7DC6F',
+    }
   },
   plugins: [
     daisyui,
   ],
   daisyui: {
     themes: [
-      "retro",
-      "aqua",
-      "lofi",
-      "pastel",
-      "fantasy",
-      "wireframe",
-      "black",
-      "luxury",
-      "dracula",
-      "coffee",
-      "sunset",
+      "light",
     ],
+    
   },
 }
 

@@ -1,16 +1,6 @@
-var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-    // muestro las líneas de código
-    lineNumbers: true,
-    // elijo el tema
-    theme: 'icecoder',
-    mode: 'javascript',
-    // esto deshabilita la opción de reescribir
-});
-
-
+var editor = ace.edit("editor");
 function Compilar()
 {
-    var datos = editor.getValue()
     var request = new Request('resultado', 
     {
         method: 'POST',
