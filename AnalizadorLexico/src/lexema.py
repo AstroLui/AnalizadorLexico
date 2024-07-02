@@ -9,15 +9,13 @@ reservadas = {
  'THROW': 'throw','THROWS': 'throws','TRANSIENT': 'transient','TRY': 'try','TYPEOF': 'typeof','UNDEFINED': 'undefined','VOID': 'void','VOLATILE': 'volatile','WITH': 'with',
  'YIELD': 'yield'}
 
-tokens = ['ID', 'NUMERO', 'DECIMAL' 'STRING', 'ASIGNAR', 'SUMA', 'RESTA', 'DIV', 'MULT', 'COMA', 'PUNTO', 'MENOR', 'MAYOR', 'MODULO', 'MASMAS', 'MENOSMENOS', 'IGUAL', 
+tokens = ['ID', 'NUMERO', 'DECIMAL' 'STRING', 'ASIGNAR', 'SUMA', 'RESTA', 'DIV', 'MULT', 'COMA', 'PUNTO', 'MENOR', 'MAYOR', 'MODULO', 'IGUAL', 
          'MAYOR_IGUAL', 'MENOR_IGUAL', 'DIFERENTE', 'AND', 'OR', 'NOT', 'PARENT_DER', 'PARENT_IZQ', 'CORCHETE_DER', 'CORCHETE_IZQ', 'LLAVE_DER', 'LLAVE_IZQ',
          'PUNTOCOMA', 'DOSPUNTOS', 'INTERROGACION', 'PALABRA_RESERVADA']
 
 t_SUMA = r'\+'
 t_RESTA = r'\-'
 t_ASIGNAR = r'='
-t_MASMAS = r'\++'
-t_MENOSMENOS = r'\--'
 t_MENOR = r'\<'
 t_MAYOR = r'\>'
 t_DIV = r'/'
