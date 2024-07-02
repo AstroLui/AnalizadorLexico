@@ -66,14 +66,18 @@ def t_error(t):
 
 lexer = lex.lex()
 
+
 def Data(datos):
     data = datos
     lexer.input(data)
     stringData = ""
+    datas = []
     while True:
         token = lexer.token()
         if not token:
             break
         stringData += (f"Tipo: {token.type}, Lexema: ( {token.value} )\n")
-    return stringData
+        datas.append((token.type, token.value))
+    diccionarioData = dict(zip(range(len(datas)), datas))
+    return diccionarioData
 

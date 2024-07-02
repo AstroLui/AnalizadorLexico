@@ -5,16 +5,14 @@
 {% block content %}
     <div class="m-3 mt-5 p-2 container h-5/6">
         <div class="container flex flex-row items-center justify-center gap-5 h-full">
-            <div class="container w-2/4 h-full p-3" id="codeSpace">
-                <textarea class="textarea textarea-bordered textarea-md w-full h-full">Codigo Aqui</textarea>
+            <div class="container w-2/4 h-full p-3">
+                <textarea class="textarea textarea-bordered textarea-md w-full h-full" id="codeSpace" onkeyup="Compilar()" >Codigo Aqui</textarea>
             </div>
             <div class="container w-2/4 h-full p-3">
                 <div class="mockup-code w-full h-full text-base" id="codeSpaceMirror">
-                    <div>
-                        <pre data-prefix="1"><code>Resultado Aqui</code></pre>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="/static/js/Home.js"></script>
 {% endblock content %}
