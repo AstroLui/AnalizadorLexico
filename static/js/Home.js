@@ -29,9 +29,13 @@ function AddCodeSpace(data){
     codeSpaceMirror.innerHTML = ``
     Object.entries(data).forEach(([key, value]) =>{
         var code = document.createElement('div');
+
         code.innerHTML = 
         `
-            <pre data-prefix=${key}><code>${value['1']}</code></pre>
+            <div class="tooltip tooltip-bottom" data-tip="${value['0']}">
+                <pre class="cursor-pointer" data-prefix=${key}>${value['1']}</pre>
+            </div>
+            
         `
         codeSpaceMirror.appendChild(code);
     })

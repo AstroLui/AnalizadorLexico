@@ -8,9 +8,16 @@
     <link rel="icon" href="{% static 'image/iconMigos.png' %}" type="image/x-icon">
     <title>The Migos Compiler</title>
 </head>
-<body data-theme="light" class="font-inter h-screen">
+<body data-theme="light" class="font-inter h-screen w-screen flex flex-col items-center justify-center">
     <div class="navbar bg-base-100">
-        <div class="navbar-start"></div>
+        <div class="navbar-start">
+            <button 
+                class="btn btn-md btn-neutral ml-5"
+                onclick="Compilar()"
+            >
+                Compilar -->
+            </button>
+        </div>
         <div class="navbar-center">
             <a class="w-auto h-auto p-2 flex gap-2 btn btn-square btn-ghost text-xl font-inter font-extralight">
                 <img src="{% static 'image/logoMigos.png' %}" class="block p-1 rounded-md h-9 " />
@@ -19,7 +26,9 @@
         </div>
         <div class="navbar-end"></div>
     </div>
-    {% block content %}
-    {% endblock content %}
+    <div class="container p-3 h-5/6">
+        {% block content %}
+        {% endblock content %}
+    </div>
   </body>
 </html>
