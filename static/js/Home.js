@@ -31,29 +31,49 @@ function AddCodeSpace(data){
     var content = '';
     var tooltip = '';
     for(var i = 0; i < Object.entries(data).length; i++){
-        if(data[i]['0'] != "NEWLINE"){
+        if(data[i]['0'] != "SALTO"){
             content += data[i]['1'] + ''
-            if(i == Object.entries(data).length-1){
-                tooltip += data[i]['0']
-            }else{
-                tooltip += data[i]['0'] + ' - '
+            tooltip += data[i]['0'] + '  '
+        }else if(data[i]['0'] == "SALTO"){
+            try {
+                if(data[i+1]['0'] == "SALTO"){
+                    newLine(codeSpaceMirror, tooltip, iLine, content);
+                    iLine++;
+                    content= '';
+                    tooltip = '';
+                    newLineEmpty(codeSpaceMirror, iLine);
+                    iLine++;
+                }
+                else if(data[i+1]['0'] != "SALTO") {
+                    if(content != ''){
+                        newLine(codeSpaceMirror, tooltip, iLine, content);
+                        iLine++;
+                        content= '';
+                        tooltip = '';
+                    }
+                }
+            } catch (error) {
+                newLine(codeSpaceMirror, tooltip, iLine, content);
+                iLine++;
+                newLineEmpty(codeSpaceMirror, iLine);
+                iLine++;
+                content= '';
+                tooltip = '';
             }
-        }else if(data[i]['0'] == "NEWLINE"){
-            newLine(codeSpaceMirror, tooltip, iLine, content);
-            iLine++;
-            newLineEmpty(codeSpaceMirror, iLine);
-            iLine++;
         }
     }
-    newLine(codeSpaceMirror, tooltip, iLine, content);
-    iLine++;
+    if(data[Object.entries(data).length-1]['0'] != "SALTO"){
+        newLine(codeSpaceMirror, tooltip, iLine, content);
+        iLine++;
+    }
+
 }
 
 function newLine(nodeFather, tooltip, iLine, content){
     var code = document.createElement('div');
         code.innerHTML = 
         `
-            <div class="tooltip tooltip-bottom" data-tip="${tooltip}">
+            <div class="tooltip text-sm " data-tip="${tooltip}">
                 <pre class="cursor-pointer" data-prefix=${iLine}>${content}</pre>
             </div>
         `
