@@ -202,23 +202,18 @@ int main() {
     }
 }
 '''
+def Run(input_string):
+    # Darle la cadena de entrada al lexer
+    lexer.input(input_string)
 
-# Darle la cadena de entrada al lexer
-lexer.input(input_string)
+    # Iterar sobre los tokens encontrados para imprimir el analisis lexico
+    for token in lexer:
+        print(f'Token: {token.type}, Valor: {token.value}, Línea: {token.lineno}')
 
-# Iterar sobre los tokens encontrados para imprimir el analisis lexico
-for token in lexer:
-    print(f'Token: {token.type}, Valor: {token.value}, Línea: {token.lineno}')
+    # Construir el parser
+    parser = yacc.yacc(debug=True)
 
-# Construir el parser
-parser = yacc.yacc(debug=True)
-
-# Analizar la cadena de entrada
-result = parser.parse(input_string)
-
-# Imprimir el resultado del análisis sintactico
-if result:
-    print("\n\n") 
-    print("El resultado del análisis es: \n\n" + result)
-else:
-    print("El análisis no tuvo éxito.")
+    # Analizar la cadena de entrada
+    result = parser.parse(input_string)
+    print(result)
+    return result

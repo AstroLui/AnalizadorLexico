@@ -1395,6 +1395,10 @@ html{
   width: 100vw;
 }
 
+.w-4\/5{
+  width: 80%;
+}
+
 .flex-row{
   flex-direction: row;
 }

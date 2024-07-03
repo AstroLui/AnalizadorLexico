@@ -3,6 +3,7 @@ const codeSpace = document.getElementById("codeSpace");
 function Compilar()
 {
     var datos = document.getElementById("codeSpace").value;
+    console.log(datos);
     var request = new Request('resultado', 
     {
         method: 'POST',
@@ -13,9 +14,9 @@ function Compilar()
     .then(response => response.json())
     .then(data =>
         {
-            tokens = data['data'];
+            tokens = data;
             console.log(tokens)
-            AddCodeSpace(tokens);
+            AddCodeSpace(tokens['data']);
             
         })
     .catch(error =>{
