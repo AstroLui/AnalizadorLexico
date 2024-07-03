@@ -95,6 +95,7 @@ def p_funcion(p):
     funcion : RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
             | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA
             | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
+            | RESERVADO bloque
 
     '''
     p[0] = "funcion → " + " ".join(p[1:])
@@ -151,6 +152,7 @@ def p_argumento(p):
               | IDENTIFICADOR
               | asignacion
               | incremento
+              | comparacion
     '''
     p[0] = "argumento → " + str(p[1])
 
@@ -195,6 +197,9 @@ int main() {
     let n = 1;
     if(c = 1){
       fact = fact * c;}
+      for (c = 1; c <= n; c++) {
+        fact = fact * c;
+    }
 }
 '''
 
