@@ -28,64 +28,79 @@ function AddCodeSpace(data){
     var codeSpaceMirror = document.getElementById("codeSpaceMirror");
     codeSpaceMirror.innerHTML = ``
     var iLine = 1;
-    var content = '';
-    var tooltip = '';
+    var arrayContent = []
     for(var i = 0; i < Object.entries(data).length; i++){
         if(data[i]['0'] != "SALTO"){
-            content += data[i]['1'] + ''
-            tooltip += data[i]['0'] + '  '
+            arrayContent.push(new Token(data[i]['1'], data[i]['0']));
         }else if(data[i]['0'] == "SALTO"){
             try {
                 if(data[i+1]['0'] == "SALTO"){
-                    newLine(codeSpaceMirror, tooltip, iLine, content);
+                    newLine(codeSpaceMirror, iLine, arrayContent);
+                    arrayContent = []
                     iLine++;
-                    content= '';
-                    tooltip = '';
                     newLineEmpty(codeSpaceMirror, iLine);
                     iLine++;
                 }
                 else if(data[i+1]['0'] != "SALTO") {
-                    if(content != ''){
-                        newLine(codeSpaceMirror, tooltip, iLine, content);
+                    if(arrayContent.length === 0){
+                        newLine(codeSpaceMirror, iLine, arrayContent);
                         iLine++;
-                        content= '';
-                        tooltip = '';
                     }
                 }
             } catch (error) {
-                newLine(codeSpaceMirror, tooltip, iLine, content);
+                newLine(codeSpaceMirror, iLine, arrayContent);
+                arrayContent = []
                 iLine++;
                 newLineEmpty(codeSpaceMirror, iLine);
                 iLine++;
-                content= '';
-                tooltip = '';
             }
         }
     }
     if(data[Object.entries(data).length-1]['0'] != "SALTO"){
-        newLine(codeSpaceMirror, tooltip, iLine, content);
+        newLine(codeSpaceMirror, iLine, arrayContent);
         iLine++;
     }
 
 }
 
-function newLine(nodeFather, tooltip, iLine, content){
-    var code = document.createElement('div');
-        code.innerHTML = 
-        `
-            <div class="tooltip text-sm " data-tip="${tooltip}">
-                <pre class="cursor-pointer" data-prefix=${iLine}>${content}</pre>
-            </div>
-        `
+function newLine(nodeFather, iLine, arrayContent){
+    var code = document.createElement('pre');
+    code.className = "flex gap-2 items-center"
+    code.setAttribute("data-prefix", iLine);
+    arrayContent.forEach(element => {
+        newItem(code, element.getType(), element.getValue());
+    });
     nodeFather.appendChild(code); 
 }
+
+function newItem(nodeFather, tooltip, content){
+    var tooltipContainer = document.createElement('div');
+    tooltipContainer.setAttribute("data-tip", tooltip);
+    tooltipContainer.classList.add("tooltip");
+    tooltipContainer.innerHTML = `<span class="btn">${content}</span>`;
+    nodeFather.appendChild(tooltipContainer);
+}
+
 function newLineEmpty(nodeFather, iLine){
     var code = document.createElement('div');
         code.innerHTML = 
         `
             <div>
-                <pre class="cursor-pointer" data-prefix=${iLine}></pre>
+                <pre class="" data-prefix=${iLine}></pre>
             </div>
         `
     nodeFather.appendChild(code); 
+}
+
+class Token{
+    constructor(value, type){
+        this.value = value;
+        this.type = type
+    }
+    getValue(){
+        return this.value;
+    }
+    getType(){
+        return this.type;
+    }
 }
