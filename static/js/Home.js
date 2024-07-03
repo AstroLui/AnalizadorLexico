@@ -17,6 +17,7 @@ function Compilar()
             tokens = data;
             console.log(tokens)
             AddCodeSpace(tokens['data']);
+            AddCodeSintactico(tokens['sint'])
             
         })
     .catch(error =>{
@@ -25,6 +26,12 @@ function Compilar()
 
 }
 
+function AddCodeSintactico(data){
+    var codeSpace = document.getElementById("sintactico");
+    console.log(data['sint'])
+    codeSpace.className = "text-sm font-thin"
+    codeSpace.innerHTML = `${data}`
+}
 function AddCodeSpace(data){
     var codeSpaceMirror = document.getElementById("codeSpaceMirror");
     codeSpaceMirror.innerHTML = ``
@@ -42,11 +49,11 @@ function AddCodeSpace(data){
                     newLineEmpty(codeSpaceMirror, iLine);
                     iLine++;
                 }
-                else if(data[i+1]['0'] != "SALTO") {
-                    if(arrayContent.length === 0){
-                        newLine(codeSpaceMirror, iLine, arrayContent);
-                        iLine++;
-                    }
+                else{
+                    newLine(codeSpaceMirror, iLine, arrayContent);
+                    arrayContent = []
+                    iLine++;
+   
                 }
             } catch (error) {
                 newLine(codeSpaceMirror, iLine, arrayContent);
@@ -66,7 +73,7 @@ function AddCodeSpace(data){
 
 function newLine(nodeFather, iLine, arrayContent){
     var code = document.createElement('pre');
-    code.className = "flex gap-2 items-center"
+    code.className = "flex p-2 gap-2 items-center"
     code.setAttribute("data-prefix", iLine);
     arrayContent.forEach(element => {
         newItem(code, element.getType(), element.getValue());

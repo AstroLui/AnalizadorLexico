@@ -1,4 +1,5 @@
 from ply import lex, yacc
+import json
 tokens = (
     'NUMERO',
     'RESERVADO',
@@ -191,20 +192,12 @@ def p_error(p):
 lexer = lex.lex()
 
 # Cadena de entrada
-input_string = '''
-int main() {
-    var c = 1;
-    let n = 1;
-    if(c = 1){
-      fact = fact * c;}
-      for (c = 1; c <= n; c++) {
-        fact = fact * c;
-    }
-}
-'''
+
 def Run(input_string):
+    testData = "".join(input_string)
+    print(testData)
     # Darle la cadena de entrada al lexer
-    lexer.input(input_string)
+    lexer.input(testData)
 
     # Iterar sobre los tokens encontrados para imprimir el analisis lexico
     for token in lexer:
@@ -214,6 +207,6 @@ def Run(input_string):
     parser = yacc.yacc(debug=True)
 
     # Analizar la cadena de entrada
-    result = parser.parse(input_string)
+    result = parser.parse(testData)
     print(result)
     return result

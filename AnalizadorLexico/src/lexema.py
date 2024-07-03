@@ -11,7 +11,7 @@ reservadas = {
 
 tokens = ['ID', 'NUMERO', 'DECIMAL', 'STRING', 'ASIGNAR', 'SUMA', 'RESTA', 'DIV', 'MULT', 'COMA', 'PUNTO', 'MENOR', 'MAYOR', 'MODULO', 'IGUAL', 
          'MAYOR_IGUAL', 'MENOR_IGUAL', 'DIFERENTE', 'AND', 'OR', 'NOT', 'PARENT_DER', 'PARENT_IZQ', 'CORCHETE_DER', 'CORCHETE_IZQ', 'LLAVE_DER', 'LLAVE_IZQ',
-         'PUNTOCOMA', 'DOSPUNTOS', 'INTERROGACION', 'PALABRA_RESERVADA']
+         'PUNTOCOMA', 'DOSPUNTOS', 'INTERROGACION', 'PALABRA_RESERVADA', 'SALTO']
 
 t_SUMA = r'\+'
 t_RESTA = r'\-'
@@ -39,7 +39,8 @@ t_PUNTO = r'\.'
 t_PUNTOCOMA = r'\;'
 t_DOSPUNTOS = r'\:'
 t_INTERROGACION = r'\?'
-t_ignore = r' \n'
+t_SALTO = r'\n'
+t_ignore = r'[ \t]+'
 
 def t_NUMERO(t):
   r'\d+'
