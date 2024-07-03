@@ -1,6 +1,4 @@
 from ply import lex, yacc
-
-# Definición de tokens
 tokens = (
     'NUMERO',
     'RESERVADO',
@@ -22,12 +20,11 @@ tokens = (
     'SUMA',
     'RESTA',
     'DIV',
-    'CONDICIONAL',
+    'MENOR_IGUAL',
 )
 
 # Expresiones regulares para los tokens
-t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let)'
-t_CONDICIONAL = r'(if|else)'
+t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let|if|else)'
 t_IDENTIFICADOR = r'([a-z]|[A-Z])+'
 t_STRING = r'"([^"\\]|\\.)*"'
 t_MASMAS = r'\+\+'
@@ -44,6 +41,7 @@ t_LLAVE_ABIERTA = r'\{'
 t_LLAVE_CERRADA = r'\}'
 t_MENOR = r'\<'
 t_MAYOR = r'\>'
+t_MENOR_IGUAL = r'\<='
 t_AMPERSON = r'\&'
 
 # Funciones de manejo de tokens
@@ -101,13 +99,6 @@ def p_funcion(p):
     '''
     p[0] = "funcion → " + " ".join(p[1:])
 
-def p_condicional(p):
-    '''
-    condicional : CONDICIONAL PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque 
-                | CONDICIONAL PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    '''
-    p[0] = "condicional → " + " ".join(p[1:])
-
 def p_bloque(p):
     '''
     bloque : LLAVE_ABIERTA declaraciones LLAVE_CERRADA
@@ -129,6 +120,7 @@ def p_comparacion(p):
     '''
     comparacion : IDENTIFICADOR MENOR valor
                 | IDENTIFICADOR MAYOR valor
+                | IDENTIFICADOR MENOR_IGUAL valor
     '''
     p[0] = "comparacion → " + " ".join(p[1:])
 
@@ -177,9 +169,6 @@ def p_incremento(p):
 def p_operacion(p):
     '''
     operacion : valor MULT valor
-    | valor DIV valor
-    | valor SUMA valor
-    | valor RESTA valor
     '''
     p[0] = "operacion → " + " ".join(p[1:])
 
@@ -201,11 +190,11 @@ lexer = lex.lex()
 
 # Cadena de entrada
 input_string = '''
-function main() {
+int main() {
     var c = 1;
-    let n = 12 - 2;
-    KK = 1+2
-
+    let n = 1;
+    if(c = 1){
+      fact = fact * c;}
 }
 '''
 

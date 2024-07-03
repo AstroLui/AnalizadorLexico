@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AMPERSON ASIGNAR COMA CONDICIONAL DIV IDENTIFICADOR IGUAL LLAVE_ABIERTA LLAVE_CERRADA MASMAS MAYOR MENOR MULT NUMERO PARENTESIS_ABIERTO PARENTESIS_CERRADO PUNTOCOMA RESERVADO RESTA STRING SUMA\n    declaraciones : declaracion declaraciones\n                  | declaracion\n    \n    declaracion : asignacion\n                | funcion\n                | inclusion\n                | retorno\n                | comparacion\n    \n    inclusion : RESERVADO RESERVADO\n    \n    funcion : RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque\n            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA\n            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque\n\n    \n    condicional : CONDICIONAL PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque \n                | CONDICIONAL PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque\n    \n    bloque : LLAVE_ABIERTA declaraciones LLAVE_CERRADA\n    \n    asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR valor \n               | RESERVADO IDENTIFICADOR ASIGNAR operacion\n               | RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR operacion PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR operacion\n    \n    comparacion : IDENTIFICADOR MENOR valor\n                | IDENTIFICADOR MAYOR valor\n    \n    valor : IDENTIFICADOR\n          | NUMERO\n    \n    argumentos : argumento\n               | argumento COMA argumentos\n               | argumento PUNTOCOMA argumentos\n    \n    argumento : STRING\n              | referencia\n              | IDENTIFICADOR\n              | asignacion\n              | incremento\n    \n    referencia : AMPERSON IDENTIFICADOR\n    \n    incremento : IDENTIFICADOR MASMAS\n    \n    operacion : valor MULT valor\n    | valor DIV valor\n    | valor SUMA valor\n    | valor RESTA valor\n    \n    retorno : RESERVADO valor PUNTOCOMA\n    '
+_lr_signature = 'AMPERSON ASIGNAR COMA DIV IDENTIFICADOR IGUAL LLAVE_ABIERTA LLAVE_CERRADA MASMAS MAYOR MENOR MENOR_IGUAL MULT NUMERO PARENTESIS_ABIERTO PARENTESIS_CERRADO PUNTOCOMA RESERVADO RESTA STRING SUMA\n    declaraciones : declaracion declaraciones\n                  | declaracion\n    \n    declaracion : asignacion\n                | funcion\n                | inclusion\n                | retorno\n                | comparacion\n    \n    inclusion : RESERVADO RESERVADO\n    \n    funcion : RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque\n            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA\n            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque\n\n    \n    bloque : LLAVE_ABIERTA declaraciones LLAVE_CERRADA\n    \n    asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR valor \n               | RESERVADO IDENTIFICADOR ASIGNAR operacion\n               | RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR operacion PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR operacion\n    \n    comparacion : IDENTIFICADOR MENOR valor\n                | IDENTIFICADOR MAYOR valor\n                | IDENTIFICADOR MENOR_IGUAL valor\n    \n    valor : IDENTIFICADOR\n          | NUMERO\n    \n    argumentos : argumento\n               | argumento COMA argumentos\n               | argumento PUNTOCOMA argumentos\n    \n    argumento : STRING\n              | referencia\n              | IDENTIFICADOR\n              | asignacion\n              | incremento\n    \n    referencia : AMPERSON IDENTIFICADOR\n    \n    incremento : IDENTIFICADOR MASMAS\n    \n    operacion : valor MULT valor\n    \n    retorno : RESERVADO valor PUNTOCOMA\n    '
     
-_lr_action_items = {'RESERVADO':([0,2,3,4,5,6,7,8,11,14,15,21,31,32,33,34,35,38,41,42,49,50,51,52,53,54,55,58,59,60,61,63,],[8,8,-3,-4,-5,-6,-7,11,-8,22,-24,-39,-23,-16,-20,-21,-22,-17,22,22,-19,-9,8,-15,-18,-10,-11,-35,-36,-37,-38,-14,]),'IDENTIFICADOR':([0,2,3,4,5,6,7,8,11,14,15,16,17,18,20,21,22,30,31,32,33,34,35,38,41,42,45,46,47,48,49,50,51,52,53,54,55,58,59,60,61,63,],[9,9,-3,-4,-5,-6,-7,12,-8,27,-24,31,31,31,31,-39,39,44,-23,-16,-20,-21,-22,-17,27,27,31,31,31,31,-19,-9,9,-15,-18,-10,-11,-35,-36,-37,-38,-14,]),'$end':([1,2,3,4,5,6,7,10,11,15,21,31,32,33,34,35,38,49,50,52,53,54,55,58,59,60,61,63,],[0,-2,-3,-4,-5,-6,-7,-1,-8,-24,-39,-23,-16,-20,-21,-22,-17,-19,-9,-15,-18,-10,-11,-35,-36,-37,-38,-14,]),'LLAVE_CERRADA':([2,3,4,5,6,7,10,11,15,21,31,32,33,34,35,38,49,50,52,53,54,55,58,59,60,61,62,63,],[-2,-3,-4,-5,-6,-7,-1,-8,-24,-39,-23,-16,-20,-21,-22,-17,-19,-9,-15,-18,-10,-11,-35,-36,-37,-38,63,-14,]),'PARENTESIS_ABIERTO':([8,11,],[14,19,]),'NUMERO':([8,16,17,18,20,45,46,47,48,],[15,15,15,15,15,15,15,15,15,]),'ASIGNAR':([9,12,27,39,],[16,20,16,20,]),'MENOR':([9,],[17,]),'MAYOR':([9,],[18,]),'PUNTOCOMA':([12,13,15,24,25,26,27,28,29,31,32,33,37,38,40,43,44,49,52,53,58,59,60,61,],[-23,21,-24,42,-28,-29,-30,-31,-32,-23,-16,49,52,53,54,-34,-33,-19,-15,-18,-35,-36,-37,-38,]),'STRING':([14,41,42,],[25,25,25,]),'AMPERSON':([14,41,42,],[30,30,30,]),'MULT':([15,31,32,37,],[-24,-23,45,45,]),'DIV':([15,31,32,37,],[-24,-23,46,46,]),'SUMA':([15,31,32,37,],[-24,-23,47,47,]),'RESTA':([15,31,32,37,],[-24,-23,48,48,]),'COMA':([15,24,25,26,27,28,29,31,32,33,38,43,44,49,52,53,58,59,60,61,],[-24,41,-28,-29,-30,-31,-32,-23,-16,-20,-17,-34,-33,-19,-15,-18,-35,-36,-37,-38,]),'PARENTESIS_CERRADO':([15,19,23,24,25,26,27,28,29,31,32,33,38,43,44,49,52,53,56,57,58,59,60,61,],[-24,36,40,-25,-28,-29,-30,-31,-32,-23,-16,-20,-17,-34,-33,-19,-15,-18,-26,-27,-35,-36,-37,-38,]),'MASMAS':([27,],[43,]),'LLAVE_ABIERTA':([36,40,],[51,51,]),}
+_lr_action_items = {'RESERVADO':([0,2,3,4,5,6,7,8,11,14,15,22,32,33,34,35,36,37,40,43,44,48,49,50,51,52,53,54,57,59,],[8,8,-3,-4,-5,-6,-7,11,-8,23,-23,-35,-22,-14,-18,-19,-20,-21,-15,23,23,-17,-9,8,-13,-16,-10,-11,-34,-12,]),'IDENTIFICADOR':([0,2,3,4,5,6,7,8,11,14,15,16,17,18,19,21,22,23,31,32,33,34,35,36,37,40,43,44,47,48,49,50,51,52,53,54,57,59,],[9,9,-3,-4,-5,-6,-7,12,-8,28,-23,32,32,32,32,32,-35,41,46,-22,-14,-18,-19,-20,-21,-15,28,28,32,-17,-9,9,-13,-16,-10,-11,-34,-12,]),'$end':([1,2,3,4,5,6,7,10,11,15,22,32,33,34,35,36,37,40,48,49,51,52,53,54,57,59,],[0,-2,-3,-4,-5,-6,-7,-1,-8,-23,-35,-22,-14,-18,-19,-20,-21,-15,-17,-9,-13,-16,-10,-11,-34,-12,]),'LLAVE_CERRADA':([2,3,4,5,6,7,10,11,15,22,32,33,34,35,36,37,40,48,49,51,52,53,54,57,58,59,],[-2,-3,-4,-5,-6,-7,-1,-8,-23,-35,-22,-14,-18,-19,-20,-21,-15,-17,-9,-13,-16,-10,-11,-34,59,-12,]),'PARENTESIS_ABIERTO':([8,11,],[14,20,]),'NUMERO':([8,16,17,18,19,21,47,],[15,15,15,15,15,15,15,]),'ASIGNAR':([9,12,28,41,],[16,21,16,21,]),'MENOR':([9,],[17,]),'MAYOR':([9,],[18,]),'MENOR_IGUAL':([9,],[19,]),'PUNTOCOMA':([12,13,15,25,26,27,28,29,30,32,33,34,39,40,42,45,46,48,51,52,57,],[-22,22,-23,44,-27,-28,-29,-30,-31,-22,-14,48,51,52,53,-33,-32,-17,-13,-16,-34,]),'STRING':([14,43,44,],[26,26,26,]),'AMPERSON':([14,43,44,],[31,31,31,]),'MULT':([15,32,33,39,],[-23,-22,47,47,]),'COMA':([15,25,26,27,28,29,30,32,33,34,40,45,46,48,51,52,57,],[-23,43,-27,-28,-29,-30,-31,-22,-14,-18,-15,-33,-32,-17,-13,-16,-34,]),'PARENTESIS_CERRADO':([15,20,24,25,26,27,28,29,30,32,33,34,40,45,46,48,51,52,55,56,57,],[-23,38,42,-24,-27,-28,-29,-30,-31,-22,-14,-18,-15,-33,-32,-17,-13,-16,-25,-26,-34,]),'MASMAS':([28,],[45,]),'LLAVE_ABIERTA':([38,42,],[50,50,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'declaraciones':([0,2,51,],[1,10,62,]),'declaracion':([0,2,51,],[2,2,2,]),'asignacion':([0,2,14,41,42,51,],[3,3,28,28,28,3,]),'funcion':([0,2,51,],[4,4,4,]),'inclusion':([0,2,51,],[5,5,5,]),'retorno':([0,2,51,],[6,6,6,]),'comparacion':([0,2,51,],[7,7,7,]),'valor':([8,16,17,18,20,45,46,47,48,],[13,32,34,35,37,58,59,60,61,]),'argumentos':([14,41,42,],[23,56,57,]),'argumento':([14,41,42,],[24,24,24,]),'referencia':([14,41,42,],[26,26,26,]),'incremento':([14,41,42,],[29,29,29,]),'operacion':([16,20,],[33,38,]),'bloque':([36,40,],[50,55,]),}
+_lr_goto_items = {'declaraciones':([0,2,50,],[1,10,58,]),'declaracion':([0,2,50,],[2,2,2,]),'asignacion':([0,2,14,43,44,50,],[3,3,29,29,29,3,]),'funcion':([0,2,50,],[4,4,4,]),'inclusion':([0,2,50,],[5,5,5,]),'retorno':([0,2,50,],[6,6,6,]),'comparacion':([0,2,50,],[7,7,7,]),'valor':([8,16,17,18,19,21,47,],[13,33,35,36,37,39,57,]),'argumentos':([14,43,44,],[24,55,56,]),'argumento':([14,43,44,],[25,25,25,]),'referencia':([14,43,44,],[27,27,27,]),'incremento':([14,43,44,],[30,30,30,]),'operacion':([16,21,],[34,40,]),'bloque':([38,42,],[49,54,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,43 +27,39 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> declaraciones","S'",1,None,None,None),
-  ('declaraciones -> declaracion declaraciones','declaraciones',2,'p_declaraciones','sintactico.py',71),
-  ('declaraciones -> declaracion','declaraciones',1,'p_declaraciones','sintactico.py',72),
-  ('declaracion -> asignacion','declaracion',1,'p_declaracion','sintactico.py',81),
-  ('declaracion -> funcion','declaracion',1,'p_declaracion','sintactico.py',82),
-  ('declaracion -> inclusion','declaracion',1,'p_declaracion','sintactico.py',83),
-  ('declaracion -> retorno','declaracion',1,'p_declaracion','sintactico.py',84),
-  ('declaracion -> comparacion','declaracion',1,'p_declaracion','sintactico.py',85),
-  ('inclusion -> RESERVADO RESERVADO','inclusion',2,'p_inclusion','sintactico.py',91),
-  ('funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','sintactico.py',97),
-  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA','funcion',5,'p_funcion','sintactico.py',98),
-  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','sintactico.py',99),
-  ('condicional -> CONDICIONAL PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque','condicional',4,'p_condicional','sintactico.py',106),
-  ('condicional -> CONDICIONAL PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque','condicional',5,'p_condicional','sintactico.py',107),
-  ('bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA','bloque',3,'p_bloque','sintactico.py',113),
-  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA','asignacion',5,'p_asignacion','sintactico.py',119),
-  ('asignacion -> IDENTIFICADOR ASIGNAR valor','asignacion',3,'p_asignacion','sintactico.py',120),
-  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion','asignacion',4,'p_asignacion','sintactico.py',121),
-  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA','asignacion',5,'p_asignacion','sintactico.py',122),
-  ('asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA','asignacion',4,'p_asignacion','sintactico.py',123),
-  ('asignacion -> IDENTIFICADOR ASIGNAR operacion','asignacion',3,'p_asignacion','sintactico.py',124),
-  ('comparacion -> IDENTIFICADOR MENOR valor','comparacion',3,'p_comparacion','sintactico.py',130),
-  ('comparacion -> IDENTIFICADOR MAYOR valor','comparacion',3,'p_comparacion','sintactico.py',131),
-  ('valor -> IDENTIFICADOR','valor',1,'p_valor','sintactico.py',137),
-  ('valor -> NUMERO','valor',1,'p_valor','sintactico.py',138),
-  ('argumentos -> argumento','argumentos',1,'p_argumentos','sintactico.py',144),
-  ('argumentos -> argumento COMA argumentos','argumentos',3,'p_argumentos','sintactico.py',145),
-  ('argumentos -> argumento PUNTOCOMA argumentos','argumentos',3,'p_argumentos','sintactico.py',146),
-  ('argumento -> STRING','argumento',1,'p_argumento','sintactico.py',157),
-  ('argumento -> referencia','argumento',1,'p_argumento','sintactico.py',158),
-  ('argumento -> IDENTIFICADOR','argumento',1,'p_argumento','sintactico.py',159),
-  ('argumento -> asignacion','argumento',1,'p_argumento','sintactico.py',160),
-  ('argumento -> incremento','argumento',1,'p_argumento','sintactico.py',161),
-  ('referencia -> AMPERSON IDENTIFICADOR','referencia',2,'p_referencia','sintactico.py',167),
-  ('incremento -> IDENTIFICADOR MASMAS','incremento',2,'p_incremento','sintactico.py',173),
-  ('operacion -> valor MULT valor','operacion',3,'p_operacion','sintactico.py',179),
-  ('operacion -> valor DIV valor','operacion',3,'p_operacion','sintactico.py',180),
-  ('operacion -> valor SUMA valor','operacion',3,'p_operacion','sintactico.py',181),
-  ('operacion -> valor RESTA valor','operacion',3,'p_operacion','sintactico.py',182),
-  ('retorno -> RESERVADO valor PUNTOCOMA','retorno',3,'p_retorno','sintactico.py',188),
+  ('declaraciones -> declaracion declaraciones','declaraciones',2,'p_declaraciones','sintactico.py',69),
+  ('declaraciones -> declaracion','declaraciones',1,'p_declaraciones','sintactico.py',70),
+  ('declaracion -> asignacion','declaracion',1,'p_declaracion','sintactico.py',79),
+  ('declaracion -> funcion','declaracion',1,'p_declaracion','sintactico.py',80),
+  ('declaracion -> inclusion','declaracion',1,'p_declaracion','sintactico.py',81),
+  ('declaracion -> retorno','declaracion',1,'p_declaracion','sintactico.py',82),
+  ('declaracion -> comparacion','declaracion',1,'p_declaracion','sintactico.py',83),
+  ('inclusion -> RESERVADO RESERVADO','inclusion',2,'p_inclusion','sintactico.py',89),
+  ('funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','sintactico.py',95),
+  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA','funcion',5,'p_funcion','sintactico.py',96),
+  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','sintactico.py',97),
+  ('bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA','bloque',3,'p_bloque','sintactico.py',104),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA','asignacion',5,'p_asignacion','sintactico.py',110),
+  ('asignacion -> IDENTIFICADOR ASIGNAR valor','asignacion',3,'p_asignacion','sintactico.py',111),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion','asignacion',4,'p_asignacion','sintactico.py',112),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA','asignacion',5,'p_asignacion','sintactico.py',113),
+  ('asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA','asignacion',4,'p_asignacion','sintactico.py',114),
+  ('asignacion -> IDENTIFICADOR ASIGNAR operacion','asignacion',3,'p_asignacion','sintactico.py',115),
+  ('comparacion -> IDENTIFICADOR MENOR valor','comparacion',3,'p_comparacion','sintactico.py',121),
+  ('comparacion -> IDENTIFICADOR MAYOR valor','comparacion',3,'p_comparacion','sintactico.py',122),
+  ('comparacion -> IDENTIFICADOR MENOR_IGUAL valor','comparacion',3,'p_comparacion','sintactico.py',123),
+  ('valor -> IDENTIFICADOR','valor',1,'p_valor','sintactico.py',129),
+  ('valor -> NUMERO','valor',1,'p_valor','sintactico.py',130),
+  ('argumentos -> argumento','argumentos',1,'p_argumentos','sintactico.py',136),
+  ('argumentos -> argumento COMA argumentos','argumentos',3,'p_argumentos','sintactico.py',137),
+  ('argumentos -> argumento PUNTOCOMA argumentos','argumentos',3,'p_argumentos','sintactico.py',138),
+  ('argumento -> STRING','argumento',1,'p_argumento','sintactico.py',149),
+  ('argumento -> referencia','argumento',1,'p_argumento','sintactico.py',150),
+  ('argumento -> IDENTIFICADOR','argumento',1,'p_argumento','sintactico.py',151),
+  ('argumento -> asignacion','argumento',1,'p_argumento','sintactico.py',152),
+  ('argumento -> incremento','argumento',1,'p_argumento','sintactico.py',153),
+  ('referencia -> AMPERSON IDENTIFICADOR','referencia',2,'p_referencia','sintactico.py',159),
+  ('incremento -> IDENTIFICADOR MASMAS','incremento',2,'p_incremento','sintactico.py',165),
+  ('operacion -> valor MULT valor','operacion',3,'p_operacion','sintactico.py',171),
+  ('retorno -> RESERVADO valor PUNTOCOMA','retorno',3,'p_retorno','sintactico.py',177),
 ]
