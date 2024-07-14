@@ -22,10 +22,11 @@ tokens = (
     'RESTA',
     'DIV',
     'MENOR_IGUAL',
+    'CONDICIONAL',
 )
 
 # Expresiones regulares para los tokens
-t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let|if|else)'
+t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let|if|else|Boolean|string|float)'
 t_IDENTIFICADOR = r'([a-z]|[A-Z])+'
 t_STRING = r'"([^"\\]|\\.)*"'
 t_MASMAS = r'\+\+'
@@ -34,6 +35,7 @@ t_SUMA = r'\+'
 t_RESTA = r'\-'
 t_DIV = r'/'
 t_ASIGNAR = r'\='
+t_IGUAL = r'\=='
 t_PUNTOCOMA = r'\;'
 t_COMA = r'\,'
 t_PARENTESIS_ABIERTO = r'\('
@@ -82,6 +84,7 @@ def p_declaracion(p):
                 | inclusion
                 | retorno
                 | comparacion
+                | condicion
     '''
     p[0] ="declaracion → " + p[1]
 
@@ -94,12 +97,21 @@ def p_inclusion(p):
 def p_funcion(p):
     '''
     funcion : RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA
-            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-            | RESERVADO bloque
+            | RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
+            | RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
+            | RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
 
     '''
     p[0] = "funcion → " + " ".join(p[1:])
+
+def p_condicion(p):
+    '''
+    condicion : RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
+            | RESERVADO bloque
+
+    '''
+    p[0] = "condicion → " + " ".join(p[1:])
+
 
 def p_bloque(p):
     '''
@@ -110,19 +122,27 @@ def p_bloque(p):
 def p_asignacion(p):
     '''
     asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
+               | RESERVADO IDENTIFICADOR ASIGNAR valor
                | IDENTIFICADOR ASIGNAR valor 
                | RESERVADO IDENTIFICADOR ASIGNAR operacion
                | RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
                | IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
                | IDENTIFICADOR ASIGNAR operacion
+               | RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
+               | RESERVADO IDENTIFICADOR ASIGNAR cadena
+               | IDENTIFICADOR ASIGNAR cadena
+               | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
     '''
     p[0] = "asignacion → " + " ".join(p[1:])
+
+
 
 def p_comparacion(p):
     '''
     comparacion : IDENTIFICADOR MENOR valor
                 | IDENTIFICADOR MAYOR valor
                 | IDENTIFICADOR MENOR_IGUAL valor
+                | IDENTIFICADOR IGUAL valor
     '''
     p[0] = "comparacion → " + " ".join(p[1:])
 
@@ -132,6 +152,13 @@ def p_valor(p):
           | NUMERO
     '''
     p[0] = "valor → " + str(p[1])
+
+def p_cadena(p):
+    '''
+    cadena : STRING
+    '''
+    p[0] = "string → " + str(p[1])
+    
 
 def p_argumentos(p):
     '''
