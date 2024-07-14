@@ -24,11 +24,10 @@ tokens = (
     'RESTA',
     'DIV',
     'MENOR_IGUAL',
-    'CONDICIONAL',
 )
 
 # Expresiones regulares para los tokens
-t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let|if|else|Boolean|string|float)'
+t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let|if|else)'
 t_IDENTIFICADOR = r'([a-z]|[A-Z])+'
 t_STRING = r'"([^"\\]|\\.)*"'
 t_MASMAS = r'\+\+'
@@ -37,7 +36,6 @@ t_SUMA = r'\+'
 t_RESTA = r'\-'
 t_DIV = r'/'
 t_ASIGNAR = r'\='
-t_IGUAL = r'\=='
 t_PUNTOCOMA = r'\;'
 t_COMA = r'\,'
 t_PARENTESIS_ABIERTO = r'\('
@@ -86,7 +84,6 @@ def p_declaracion(p):
                 | inclusion
                 | retorno
                 | comparacion
-                | condicion
     '''
     p[0] ="declaracion → " + p[1]
 
@@ -99,21 +96,12 @@ def p_inclusion(p):
 def p_funcion(p):
     '''
     funcion : RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-            | RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-            | RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-            | RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-
-    '''
-    p[0] = "funcion → " + " ".join(p[1:])
-
-def p_condicion(p):
-    '''
-    condicion : RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
+            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA
+            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
             | RESERVADO bloque
 
     '''
-    p[0] = "condicion → " + " ".join(p[1:])
-
+    p[0] = "funcion → " + " ".join(p[1:])
 
 def p_bloque(p):
     '''
@@ -124,34 +112,30 @@ def p_bloque(p):
 def p_asignacion(p):
     '''
     asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-               | RESERVADO IDENTIFICADOR ASIGNAR valor
-               | IDENTIFICADOR ASIGNAR valor 
-               | RESERVADO IDENTIFICADOR ASIGNAR operacion
-               | RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR operacion
-               | RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-               | RESERVADO IDENTIFICADOR ASIGNAR cadena
-               | IDENTIFICADOR ASIGNAR cadena
-               | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
+               | IDENTIFICADOR ASIGNAR valor PUNTOCOMA
     '''
-    if len(p) == 5:
-        p[0] = ("asignacion", p[2], p[4])  # Guarda la información relevante para el análisis semántico
+    # Verificar si la variable ha sido previamente declarada
+    variable_name = p[2]
+    if variable_name not in variables:
+        variables[variable_name] = None  # Inicializar la variable en el diccionario
+    
+    # Verificar la compatibilidad de tipos
+    value = p[3]
+    if isinstance(value, str) and not value.startswith('"'):
+        value = variables.get(value, None)
+
+    if variables[variable_name] and value and isinstance(variables[variable_name], type(value.__str__())) and not isinstance(variables[variable_name], str) and not isinstance(value.__str__(), str):
+        print(f"Error semántico: Tipo incorrecto para la variable '{variable_name}'")
     else:
-        p[0] = ("asignacion", p[2], p[4])  # Simplificado para mostrar el proceso
-
-    # Actualiza el diccionario de variables
-    variables[p[2]] = p[4]
+        variables[variable_name] = value  # Actualizar el valor de la variable en el diccionario
+  
     p[0] = "asignacion → " + " ".join(p[1:])
-
-
 
 def p_comparacion(p):
     '''
     comparacion : IDENTIFICADOR MENOR valor
                 | IDENTIFICADOR MAYOR valor
                 | IDENTIFICADOR MENOR_IGUAL valor
-                | IDENTIFICADOR IGUAL valor
     '''
     p[0] = "comparacion → " + " ".join(p[1:])
 
@@ -161,16 +145,15 @@ def p_valor(p):
           | NUMERO
     '''
 
-    p[0] = p[1] if isinstance(p[1], int) else variables[p[1]]
+    if isinstance(p[1], int):
+        p[0] = p[1]
+    elif p[1] in variables:
+        p[0] = variables[p[1]]
+    else:
+        print(f"Error semántico: La variable '{p[1]}' no ha sido declarada.")
+        p[0] = None
 
     p[0] = "valor → " + str(p[1])
-
-def p_cadena(p):
-    '''
-    cadena : STRING
-    '''
-    p[0] = "string → " + str(p[1])
-    
 
 def p_argumentos(p):
     '''
@@ -242,7 +225,6 @@ def p_error(p):
 # Construir el lexer
 lexer = lex.lex()
 
-# Cadena de entrada
 
 def Run(input_string):
     testData = "".join(input_string)
@@ -250,7 +232,7 @@ def Run(input_string):
     # Darle la cadena de entrada al lexer
     lexer.input(testData)
 
-    # Iterar sobre los tokens encontrados para imprimir el analisis lexico
+    # Iterar sobre los tokens encontrados para imprimir el análisis léxico
     for token in lexer:
         print(f'Token: {token.type}, Valor: {token.value}, Línea: {token.lineno}')
 
@@ -261,3 +243,7 @@ def Run(input_string):
     result = parser.parse(testData)
     print(result)
     return result
+
+# Ejecutar el análisis
+Run(["int x = 5;"
+      "x = hola;"])

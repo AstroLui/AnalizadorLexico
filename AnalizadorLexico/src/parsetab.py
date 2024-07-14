@@ -17,6 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
+_lr_goto_items = {'declaraciones':([0,2,16,],[1,10,35,]),'declaracion':([0,2,16,],[2,2,2,]),'asignacion':([0,2,14,16,45,46,],[3,3,31,3,31,31,]),'funcion':([0,2,16,],[4,4,4,]),'inclusion':([0,2,16,],[5,5,5,]),'retorno':([0,2,16,],[6,6,6,]),'comparacion':([0,2,14,16,45,46,],[7,7,33,7,33,33,]),'valor':([8,18,19,20,21,23,],[13,37,38,39,40,42,]),'bloque':([8,41,44,],[15,51,54,]),'argumentos':([14,45,46,],[26,55,56,]),'argumento':([14,45,46,],[27,27,27,]),'referencia':([14,45,46,],[29,29,29,]),'incremento':([14,45,46,],[32,32,32,]),}
 _lr_goto_items = {'declaraciones':([0,2,18,],[1,11,38,]),'declaracion':([0,2,18,],[2,2,2,]),'asignacion':([0,2,15,18,24,26,56,58,59,],[3,3,34,3,34,34,34,34,34,]),'funcion':([0,2,18,],[4,4,4,]),'inclusion':([0,2,18,],[5,5,5,]),'retorno':([0,2,18,],[6,6,6,]),'comparacion':([0,2,15,18,24,26,56,58,59,],[7,7,36,7,36,36,36,36,36,]),'condicion':([0,2,18,],[8,8,8,]),'valor':([9,19,20,21,22,23,25,63,],[14,40,44,45,46,47,50,76,]),'bloque':([9,48,53,57,66,71,],[16,65,70,73,77,78,]),'argumentos':([15,24,26,56,58,59,],[29,49,54,72,74,75,]),'argumento':([15,24,26,56,58,59,],[30,30,30,30,30,30,]),'referencia':([15,24,26,56,58,59,],[32,32,32,32,32,32,]),'incremento':([15,24,26,56,58,59,],[35,35,35,35,35,35,]),'operacion':([19,25,],[41,51,]),'cadena':([19,25,],[42,52,]),}
 
 _lr_goto = {}
@@ -27,6 +28,42 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> declaraciones","S'",1,None,None,None),
+  ('declaraciones -> declaracion declaraciones','declaraciones',2,'p_declaraciones','jejeje.py',72),
+  ('declaraciones -> declaracion','declaraciones',1,'p_declaraciones','jejeje.py',73),
+  ('declaracion -> asignacion','declaracion',1,'p_declaracion','jejeje.py',82),
+  ('declaracion -> funcion','declaracion',1,'p_declaracion','jejeje.py',83),
+  ('declaracion -> inclusion','declaracion',1,'p_declaracion','jejeje.py',84),
+  ('declaracion -> retorno','declaracion',1,'p_declaracion','jejeje.py',85),
+  ('declaracion -> comparacion','declaracion',1,'p_declaracion','jejeje.py',86),
+  ('inclusion -> RESERVADO RESERVADO','inclusion',2,'p_inclusion','jejeje.py',92),
+  ('funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','jejeje.py',98),
+  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA','funcion',5,'p_funcion','jejeje.py',99),
+  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','jejeje.py',100),
+  ('funcion -> RESERVADO bloque','funcion',2,'p_funcion','jejeje.py',101),
+  ('bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA','bloque',3,'p_bloque','jejeje.py',108),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA','asignacion',5,'p_asignacion','jejeje.py',114),
+  ('asignacion -> IDENTIFICADOR ASIGNAR valor PUNTOCOMA','asignacion',4,'p_asignacion','jejeje.py',115),
+  ('comparacion -> IDENTIFICADOR MENOR valor','comparacion',3,'p_comparacion','jejeje.py',134),
+  ('comparacion -> IDENTIFICADOR MAYOR valor','comparacion',3,'p_comparacion','jejeje.py',135),
+  ('comparacion -> IDENTIFICADOR MENOR_IGUAL valor','comparacion',3,'p_comparacion','jejeje.py',136),
+  ('valor -> IDENTIFICADOR','valor',1,'p_valor','jejeje.py',142),
+  ('valor -> NUMERO','valor',1,'p_valor','jejeje.py',143),
+  ('argumentos -> argumento','argumentos',1,'p_argumentos','jejeje.py',152),
+  ('argumentos -> argumento COMA argumentos','argumentos',3,'p_argumentos','jejeje.py',153),
+  ('argumentos -> argumento PUNTOCOMA argumentos','argumentos',3,'p_argumentos','jejeje.py',154),
+  ('argumento -> STRING','argumento',1,'p_argumento','jejeje.py',165),
+  ('argumento -> referencia','argumento',1,'p_argumento','jejeje.py',166),
+  ('argumento -> IDENTIFICADOR','argumento',1,'p_argumento','jejeje.py',167),
+  ('argumento -> asignacion','argumento',1,'p_argumento','jejeje.py',168),
+  ('argumento -> incremento','argumento',1,'p_argumento','jejeje.py',169),
+  ('argumento -> comparacion','argumento',1,'p_argumento','jejeje.py',170),
+  ('referencia -> AMPERSON IDENTIFICADOR','referencia',2,'p_referencia','jejeje.py',176),
+  ('incremento -> IDENTIFICADOR MASMAS','incremento',2,'p_incremento','jejeje.py',182),
+  ('operacion -> valor MULT valor','operacion',3,'p_operacion','jejeje.py',188),
+  ('operacion -> valor SUMA valor','operacion',3,'p_operacion','jejeje.py',189),
+  ('operacion -> valor RESTA valor','operacion',3,'p_operacion','jejeje.py',190),
+  ('operacion -> valor DIV valor','operacion',3,'p_operacion','jejeje.py',191),
+  ('retorno -> RESERVADO valor PUNTOCOMA','retorno',3,'p_retorno','jejeje.py',206),
   ('declaraciones -> declaracion declaraciones','declaraciones',2,'p_declaraciones','sintactico.py',72),
   ('declaraciones -> declaracion','declaraciones',1,'p_declaraciones','sintactico.py',73),
   ('declaracion -> asignacion','declaracion',1,'p_declaracion','sintactico.py',82),
