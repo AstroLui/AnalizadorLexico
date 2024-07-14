@@ -112,19 +112,23 @@ def p_bloque(p):
 def p_asignacion(p):
     '''
     asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR valor 
-               | RESERVADO IDENTIFICADOR ASIGNAR operacion
-               | RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR operacion
+               | IDENTIFICADOR ASIGNAR valor PUNTOCOMA
     '''
-    if len(p) == 5:
-        p[0] = ("asignacion", p[2], p[4])  # Guarda la información relevante para el análisis semántico
-    else:
-        p[0] = ("asignacion", p[2], p[4])  # Simplificado para mostrar el proceso
+    # Verificar si la variable ha sido previamente declarada
+    variable_name = p[2]
+    if variable_name not in variables:
+        variables[variable_name] = None  # Inicializar la variable en el diccionario
+    
+    # Verificar la compatibilidad de tipos
+    value = p[3]
+    if isinstance(value, str) and not value.startswith('"'):
+        value = variables.get(value, None)
 
-    # Actualiza el diccionario de variables
-    variables[p[2]] = p[4]
+    if variables[variable_name] and value and isinstance(variables[variable_name], type(value.__str__())) and not isinstance(variables[variable_name], str) and not isinstance(value.__str__(), str):
+        print(f"Error semántico: Tipo incorrecto para la variable '{variable_name}'")
+    else:
+        variables[variable_name] = value  # Actualizar el valor de la variable en el diccionario
+  
     p[0] = "asignacion → " + " ".join(p[1:])
 
 def p_comparacion(p):
@@ -141,7 +145,13 @@ def p_valor(p):
           | NUMERO
     '''
 
-    p[0] = p[1] if isinstance(p[1], int) else variables[p[1]]
+    if isinstance(p[1], int):
+        p[0] = p[1]
+    elif p[1] in variables:
+        p[0] = variables[p[1]]
+    else:
+        print(f"Error semántico: La variable '{p[1]}' no ha sido declarada.")
+        p[0] = None
 
     p[0] = "valor → " + str(p[1])
 
@@ -215,7 +225,6 @@ def p_error(p):
 # Construir el lexer
 lexer = lex.lex()
 
-# Cadena de entrada
 
 def Run(input_string):
     testData = "".join(input_string)
@@ -223,7 +232,7 @@ def Run(input_string):
     # Darle la cadena de entrada al lexer
     lexer.input(testData)
 
-    # Iterar sobre los tokens encontrados para imprimir el analisis lexico
+    # Iterar sobre los tokens encontrados para imprimir el análisis léxico
     for token in lexer:
         print(f'Token: {token.type}, Valor: {token.value}, Línea: {token.lineno}')
 
@@ -234,3 +243,7 @@ def Run(input_string):
     result = parser.parse(testData)
     print(result)
     return result
+
+# Ejecutar el análisis
+Run(["int x = 5;"
+      "x = hola;"])
