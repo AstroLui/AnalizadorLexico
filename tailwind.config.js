@@ -11,6 +11,7 @@ module.exports = {
     },
     colors: {
       'luxury': '#F7DC6F',
+      'rose': '#E3242B',
     }
   },
   plugins: [

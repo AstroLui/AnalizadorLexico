@@ -2,10 +2,6 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    CONDICIONAL
-    DIV
-    RESTA
-    SUMA
     IGUAL
 
 Grammar
@@ -81,7 +77,7 @@ asignacion           : 3 27
 bloque               : 9 11 12
 comparacion          : 7 29
 declaracion          : 1 2
-declaraciones        : 1 16 0
+declaraciones        : 1 13 0
 funcion              : 4
 inclusion            : 5
 incremento           : 28
@@ -114,8 +110,8 @@ state 0
     (17) comparacion -> . IDENTIFICADOR MAYOR valor
     (18) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
 
-    RESERVADO       shift and go to state 9
-    IDENTIFICADOR   shift and go to state 10
+    RESERVADO       shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
 
     declaraciones                  shift and go to state 1
     declaracion                    shift and go to state 2
@@ -124,7 +120,6 @@ state 0
     inclusion                      shift and go to state 5
     retorno                        shift and go to state 6
     comparacion                    shift and go to state 7
-    condicion                      shift and go to state 8
 
 state 1
 
@@ -157,17 +152,16 @@ state 2
 
     $end            reduce using rule 2 (declaraciones -> declaracion .)
     LLAVE_CERRADA   reduce using rule 2 (declaraciones -> declaracion .)
-    RESERVADO       shift and go to state 9
-    IDENTIFICADOR   shift and go to state 10
+    RESERVADO       shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
 
     declaracion                    shift and go to state 2
-    declaraciones                  shift and go to state 11
+    declaraciones                  shift and go to state 10
     asignacion                     shift and go to state 3
     funcion                        shift and go to state 4
     inclusion                      shift and go to state 5
     retorno                        shift and go to state 6
     comparacion                    shift and go to state 7
-    condicion                      shift and go to state 8
 
 state 3
 
@@ -232,65 +226,29 @@ state 8
     (19) valor -> . IDENTIFICADOR
     (20) valor -> . NUMERO
 
-    RESERVADO       reduce using rule 8 (declaracion -> condicion .)
-    IDENTIFICADOR   reduce using rule 8 (declaracion -> condicion .)
-    $end            reduce using rule 8 (declaracion -> condicion .)
-    LLAVE_CERRADA   reduce using rule 8 (declaracion -> condicion .)
+    IDENTIFICADOR   shift and go to state 12
+    RESERVADO       shift and go to state 11
+    PARENTESIS_ABIERTO shift and go to state 14
+    LLAVE_ABIERTA   shift and go to state 16
+    NUMERO          shift and go to state 17
 
+    valor                          shift and go to state 13
+    bloque                         shift and go to state 15
 
 state 9
 
-    (17) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (24) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> RESERVADO . PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    (10) funcion -> RESERVADO . RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-    (11) funcion -> RESERVADO . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    (12) funcion -> RESERVADO . IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-    (13) funcion -> RESERVADO . IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    (9) inclusion -> RESERVADO . RESERVADO
-    (47) retorno -> RESERVADO . valor PUNTOCOMA
-    (14) condicion -> RESERVADO . PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    (15) condicion -> RESERVADO . bloque
-    (32) valor -> . IDENTIFICADOR
-    (33) valor -> . NUMERO
-    (16) bloque -> . LLAVE_ABIERTA declaraciones LLAVE_CERRADA
     (15) asignacion -> IDENTIFICADOR . ASIGNAR valor PUNTOCOMA
     (16) comparacion -> IDENTIFICADOR . MENOR valor
     (17) comparacion -> IDENTIFICADOR . MAYOR valor
     (18) comparacion -> IDENTIFICADOR . MENOR_IGUAL valor
 
-    IDENTIFICADOR   shift and go to state 13
-    PARENTESIS_ABIERTO shift and go to state 15
-    RESERVADO       shift and go to state 12
-    NUMERO          shift and go to state 17
-    LLAVE_ABIERTA   shift and go to state 18
+    ASIGNAR         shift and go to state 18
+    MENOR           shift and go to state 19
+    MAYOR           shift and go to state 20
+    MENOR_IGUAL     shift and go to state 21
 
-    valor                          shift and go to state 14
-    bloque                         shift and go to state 16
 
 state 10
-
-    (19) asignacion -> IDENTIFICADOR . ASIGNAR valor
-    (22) asignacion -> IDENTIFICADOR . ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> IDENTIFICADOR . ASIGNAR operacion
-    (26) asignacion -> IDENTIFICADOR . ASIGNAR cadena
-    (28) comparacion -> IDENTIFICADOR . MENOR valor
-    (29) comparacion -> IDENTIFICADOR . MAYOR valor
-    (30) comparacion -> IDENTIFICADOR . MENOR_IGUAL valor
-    (31) comparacion -> IDENTIFICADOR . IGUAL valor
-
-    ASIGNAR         shift and go to state 19
-    MENOR           shift and go to state 20
-    MAYOR           shift and go to state 21
-    MENOR_IGUAL     shift and go to state 22
-    IGUAL           shift and go to state 23
-
-
-state 11
 
     (1) declaraciones -> declaracion declaraciones .
 
@@ -298,17 +256,20 @@ state 11
     LLAVE_CERRADA   reduce using rule 1 (declaraciones -> declaracion declaraciones .)
 
 
+state 11
+
+    (9) funcion -> RESERVADO RESERVADO . PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
+    (8) inclusion -> RESERVADO RESERVADO .
+
+    PARENTESIS_ABIERTO shift and go to state 22
+    RESERVADO       reduce using rule 8 (inclusion -> RESERVADO RESERVADO .)
+    IDENTIFICADOR   reduce using rule 8 (inclusion -> RESERVADO RESERVADO .)
+    $end            reduce using rule 8 (inclusion -> RESERVADO RESERVADO .)
+    LLAVE_CERRADA   reduce using rule 8 (inclusion -> RESERVADO RESERVADO .)
+
+
 state 12
 
-    (10) funcion -> RESERVADO RESERVADO . PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-    (11) funcion -> RESERVADO RESERVADO . PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    (9) inclusion -> RESERVADO RESERVADO .
-
-    PARENTESIS_ABIERTO shift and go to state 24
-    RESERVADO       reduce using rule 9 (inclusion -> RESERVADO RESERVADO .)
-    IDENTIFICADOR   reduce using rule 9 (inclusion -> RESERVADO RESERVADO .)
-    $end            reduce using rule 9 (inclusion -> RESERVADO RESERVADO .)
-    LLAVE_CERRADA   reduce using rule 9 (inclusion -> RESERVADO RESERVADO .)
     (14) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR valor PUNTOCOMA
     (19) valor -> IDENTIFICADOR .
 
@@ -318,25 +279,13 @@ state 12
 
 state 13
 
-    (17) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR valor
-    (20) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR operacion
-    (21) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR operacion PUNTOCOMA
-    (24) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR cadena
-    (12) funcion -> RESERVADO IDENTIFICADOR . PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-    (13) funcion -> RESERVADO IDENTIFICADOR . PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    (32) valor -> IDENTIFICADOR .
     (36) retorno -> RESERVADO valor . PUNTOCOMA
 
-    ASIGNAR         shift and go to state 25
-    PARENTESIS_ABIERTO shift and go to state 26
-    PUNTOCOMA       reduce using rule 32 (valor -> IDENTIFICADOR .)
+    PUNTOCOMA       shift and go to state 24
 
 
 state 14
 
-    (47) retorno -> RESERVADO valor . PUNTOCOMA
     (10) funcion -> RESERVADO PARENTESIS_ABIERTO . argumentos PARENTESIS_CERRADO PUNTOCOMA
     (11) funcion -> RESERVADO PARENTESIS_ABIERTO . argumentos PARENTESIS_CERRADO bloque
     (21) argumentos -> . argumento
@@ -356,79 +305,31 @@ state 14
     (17) comparacion -> . IDENTIFICADOR MAYOR valor
     (18) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
 
-    PUNTOCOMA       shift and go to state 27
+    STRING          shift and go to state 28
+    IDENTIFICADOR   shift and go to state 30
+    AMPERSON        shift and go to state 34
+    RESERVADO       shift and go to state 25
 
+    argumentos                     shift and go to state 26
+    argumento                      shift and go to state 27
+    referencia                     shift and go to state 29
+    asignacion                     shift and go to state 31
+    incremento                     shift and go to state 32
+    comparacion                    shift and go to state 33
 
 state 15
 
-    (27) asignacion -> RESERVADO PARENTESIS_ABIERTO . argumentos PARENTESIS_CERRADO
-    (14) condicion -> RESERVADO PARENTESIS_ABIERTO . argumentos PARENTESIS_CERRADO bloque
-    (35) argumentos -> . argumento
-    (36) argumentos -> . argumento COMA argumentos
-    (37) argumentos -> . argumento PUNTOCOMA argumentos
-    (38) argumento -> . STRING
-    (39) argumento -> . referencia
-    (40) argumento -> . IDENTIFICADOR
-    (41) argumento -> . asignacion
-    (42) argumento -> . incremento
-    (43) argumento -> . comparacion
-    (44) referencia -> . AMPERSON IDENTIFICADOR
-    (17) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor
-    (19) asignacion -> . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (22) asignacion -> . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> . IDENTIFICADOR ASIGNAR operacion
-    (24) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena
-    (26) asignacion -> . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    (45) incremento -> . IDENTIFICADOR MASMAS
-    (28) comparacion -> . IDENTIFICADOR MENOR valor
-    (29) comparacion -> . IDENTIFICADOR MAYOR valor
-    (30) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
-    (31) comparacion -> . IDENTIFICADOR IGUAL valor
+    (12) funcion -> RESERVADO bloque .
 
-    STRING          shift and go to state 31
-    IDENTIFICADOR   shift and go to state 33
-    AMPERSON        shift and go to state 37
-    RESERVADO       shift and go to state 28
+    RESERVADO       reduce using rule 12 (funcion -> RESERVADO bloque .)
+    IDENTIFICADOR   reduce using rule 12 (funcion -> RESERVADO bloque .)
+    $end            reduce using rule 12 (funcion -> RESERVADO bloque .)
+    LLAVE_CERRADA   reduce using rule 12 (funcion -> RESERVADO bloque .)
 
-    argumentos                     shift and go to state 29
-    argumento                      shift and go to state 30
-    referencia                     shift and go to state 32
-    asignacion                     shift and go to state 34
-    incremento                     shift and go to state 35
-    comparacion                    shift and go to state 36
 
 state 16
 
-    (15) condicion -> RESERVADO bloque .
-
-    RESERVADO       reduce using rule 15 (condicion -> RESERVADO bloque .)
-    IDENTIFICADOR   reduce using rule 15 (condicion -> RESERVADO bloque .)
-    $end            reduce using rule 15 (condicion -> RESERVADO bloque .)
-    LLAVE_CERRADA   reduce using rule 15 (condicion -> RESERVADO bloque .)
-
-
-state 17
-
-    (33) valor -> NUMERO .
-
-    PUNTOCOMA       reduce using rule 33 (valor -> NUMERO .)
-    MULT            reduce using rule 33 (valor -> NUMERO .)
-    RESERVADO       reduce using rule 33 (valor -> NUMERO .)
-    IDENTIFICADOR   reduce using rule 33 (valor -> NUMERO .)
-    $end            reduce using rule 33 (valor -> NUMERO .)
-    LLAVE_CERRADA   reduce using rule 33 (valor -> NUMERO .)
-    COMA            reduce using rule 33 (valor -> NUMERO .)
-    PARENTESIS_CERRADO reduce using rule 33 (valor -> NUMERO .)
-
-
-state 18
-
-    (16) bloque -> LLAVE_ABIERTA . declaraciones LLAVE_CERRADA
+    (13) bloque -> LLAVE_ABIERTA . declaraciones LLAVE_CERRADA
     (1) declaraciones -> . declaracion declaraciones
     (2) declaraciones -> . declaracion
     (3) declaracion -> . asignacion
@@ -436,30 +337,6 @@ state 18
     (5) declaracion -> . inclusion
     (6) declaracion -> . retorno
     (7) declaracion -> . comparacion
-    (8) declaracion -> . condicion
-    (17) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor
-    (19) asignacion -> . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (22) asignacion -> . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> . IDENTIFICADOR ASIGNAR operacion
-    (24) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena
-    (26) asignacion -> . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    (10) funcion -> . RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-    (11) funcion -> . RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    (12) funcion -> . RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-    (13) funcion -> . RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    (9) inclusion -> . RESERVADO RESERVADO
-    (47) retorno -> . RESERVADO valor PUNTOCOMA
-    (28) comparacion -> . IDENTIFICADOR MENOR valor
-    (29) comparacion -> . IDENTIFICADOR MAYOR valor
-    (30) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
-    (31) comparacion -> . IDENTIFICADOR IGUAL valor
-    (14) condicion -> . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-    (15) condicion -> . RESERVADO bloque
     (14) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
     (15) asignacion -> . IDENTIFICADOR ASIGNAR valor PUNTOCOMA
     (9) funcion -> . RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
@@ -472,28 +349,16 @@ state 18
     (17) comparacion -> . IDENTIFICADOR MAYOR valor
     (18) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
 
-    RESERVADO       shift and go to state 9
-    IDENTIFICADOR   shift and go to state 10
+    RESERVADO       shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
 
-    declaraciones                  shift and go to state 38
+    declaraciones                  shift and go to state 35
     declaracion                    shift and go to state 2
     asignacion                     shift and go to state 3
     funcion                        shift and go to state 4
     inclusion                      shift and go to state 5
     retorno                        shift and go to state 6
     comparacion                    shift and go to state 7
-    condicion                      shift and go to state 8
-
-state 19
-
-    (19) asignacion -> IDENTIFICADOR ASIGNAR . valor
-    (22) asignacion -> IDENTIFICADOR ASIGNAR . operacion PUNTOCOMA
-    (23) asignacion -> IDENTIFICADOR ASIGNAR . operacion
-    (26) asignacion -> IDENTIFICADOR ASIGNAR . cadena
-    (32) valor -> . IDENTIFICADOR
-    (33) valor -> . NUMERO
-    (46) operacion -> . valor MULT valor
-    (34) cadena -> . STRING
 
 state 17
 
@@ -536,101 +401,38 @@ state 20
     (19) valor -> . IDENTIFICADOR
     (20) valor -> . NUMERO
 
-    IDENTIFICADOR   shift and go to state 39
+    IDENTIFICADOR   shift and go to state 36
     NUMERO          shift and go to state 17
-    STRING          shift and go to state 43
 
-    valor                          shift and go to state 40
-    operacion                      shift and go to state 41
-    cadena                         shift and go to state 42
+    valor                          shift and go to state 39
 
 state 21
 
-    (28) comparacion -> IDENTIFICADOR MENOR . valor
-    (32) valor -> . IDENTIFICADOR
-    (33) valor -> . NUMERO
     (18) comparacion -> IDENTIFICADOR MENOR_IGUAL . valor
     (19) valor -> . IDENTIFICADOR
     (20) valor -> . NUMERO
 
-    IDENTIFICADOR   shift and go to state 39
+    IDENTIFICADOR   shift and go to state 36
     NUMERO          shift and go to state 17
 
-    valor                          shift and go to state 44
-
-state 21
-
-    (29) comparacion -> IDENTIFICADOR MAYOR . valor
-    (32) valor -> . IDENTIFICADOR
-    (33) valor -> . NUMERO
-
-    IDENTIFICADOR   shift and go to state 39
-    NUMERO          shift and go to state 17
-
-    valor                          shift and go to state 45
+    valor                          shift and go to state 40
 
 state 22
 
-    (30) comparacion -> IDENTIFICADOR MENOR_IGUAL . valor
-    (32) valor -> . IDENTIFICADOR
-    (33) valor -> . NUMERO
+    (9) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO . PARENTESIS_CERRADO bloque
 
-    IDENTIFICADOR   shift and go to state 39
-    NUMERO          shift and go to state 17
     PARENTESIS_CERRADO shift and go to state 41
 
-    valor                          shift and go to state 46
 
 state 23
 
-    (31) comparacion -> IDENTIFICADOR IGUAL . valor
-    (32) valor -> . IDENTIFICADOR
-    (33) valor -> . NUMERO
     (14) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR . valor PUNTOCOMA
     (19) valor -> . IDENTIFICADOR
     (20) valor -> . NUMERO
 
-    IDENTIFICADOR   shift and go to state 39
+    IDENTIFICADOR   shift and go to state 36
     NUMERO          shift and go to state 17
 
-    valor                          shift and go to state 47
-
-state 24
-
-    (10) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO . PARENTESIS_CERRADO bloque
-    (11) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO . argumentos PARENTESIS_CERRADO bloque
-    (35) argumentos -> . argumento
-    (36) argumentos -> . argumento COMA argumentos
-    (37) argumentos -> . argumento PUNTOCOMA argumentos
-    (38) argumento -> . STRING
-    (39) argumento -> . referencia
-    (40) argumento -> . IDENTIFICADOR
-    (41) argumento -> . asignacion
-    (42) argumento -> . incremento
-    (43) argumento -> . comparacion
-    (44) referencia -> . AMPERSON IDENTIFICADOR
-    (17) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor
-    (19) asignacion -> . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (22) asignacion -> . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> . IDENTIFICADOR ASIGNAR operacion
-    (24) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena
-    (26) asignacion -> . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    (45) incremento -> . IDENTIFICADOR MASMAS
-    (28) comparacion -> . IDENTIFICADOR MENOR valor
-    (29) comparacion -> . IDENTIFICADOR MAYOR valor
-    (30) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
-    (31) comparacion -> . IDENTIFICADOR IGUAL valor
-
-    PARENTESIS_CERRADO shift and go to state 48
-    STRING          shift and go to state 31
-    IDENTIFICADOR   shift and go to state 33
-    AMPERSON        shift and go to state 37
-    RESERVADO       shift and go to state 28
     valor                          shift and go to state 42
 
 state 24
@@ -642,90 +444,24 @@ state 24
     $end            reduce using rule 36 (retorno -> RESERVADO valor PUNTOCOMA .)
     LLAVE_CERRADA   reduce using rule 36 (retorno -> RESERVADO valor PUNTOCOMA .)
 
-    argumentos                     shift and go to state 49
-    argumento                      shift and go to state 30
-    referencia                     shift and go to state 32
-    asignacion                     shift and go to state 34
-    incremento                     shift and go to state 35
-    comparacion                    shift and go to state 36
 
 state 25
 
-    (17) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR . valor PUNTOCOMA
-    (18) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR . valor
-    (20) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR . operacion
-    (21) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR . operacion PUNTOCOMA
-    (24) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR . cadena PUNTOCOMA
-    (25) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR . cadena
-    (32) valor -> . IDENTIFICADOR
-    (33) valor -> . NUMERO
-    (46) operacion -> . valor MULT valor
-    (34) cadena -> . STRING
-
-    IDENTIFICADOR   shift and go to state 39
-    NUMERO          shift and go to state 17
-    STRING          shift and go to state 43
     (14) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR valor PUNTOCOMA
 
     IDENTIFICADOR   shift and go to state 43
 
-    valor                          shift and go to state 50
-    operacion                      shift and go to state 51
-    cadena                         shift and go to state 52
 
 state 26
 
-    (12) funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO . PARENTESIS_CERRADO bloque
-    (13) funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO . argumentos PARENTESIS_CERRADO bloque
-    (35) argumentos -> . argumento
-    (36) argumentos -> . argumento COMA argumentos
-    (37) argumentos -> . argumento PUNTOCOMA argumentos
-    (38) argumento -> . STRING
-    (39) argumento -> . referencia
-    (40) argumento -> . IDENTIFICADOR
-    (41) argumento -> . asignacion
-    (42) argumento -> . incremento
-    (43) argumento -> . comparacion
-    (44) referencia -> . AMPERSON IDENTIFICADOR
-    (17) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor
-    (19) asignacion -> . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (22) asignacion -> . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> . IDENTIFICADOR ASIGNAR operacion
-    (24) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena
-    (26) asignacion -> . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    (45) incremento -> . IDENTIFICADOR MASMAS
-    (28) comparacion -> . IDENTIFICADOR MENOR valor
-    (29) comparacion -> . IDENTIFICADOR MAYOR valor
-    (30) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
-    (31) comparacion -> . IDENTIFICADOR IGUAL valor
+    (10) funcion -> RESERVADO PARENTESIS_ABIERTO argumentos . PARENTESIS_CERRADO PUNTOCOMA
+    (11) funcion -> RESERVADO PARENTESIS_ABIERTO argumentos . PARENTESIS_CERRADO bloque
 
-    PARENTESIS_CERRADO shift and go to state 53
-    STRING          shift and go to state 31
-    IDENTIFICADOR   shift and go to state 33
-    AMPERSON        shift and go to state 37
-    RESERVADO       shift and go to state 28
     PARENTESIS_CERRADO shift and go to state 44
 
-    argumentos                     shift and go to state 54
-    argumento                      shift and go to state 30
-    referencia                     shift and go to state 32
-    asignacion                     shift and go to state 34
-    incremento                     shift and go to state 35
-    comparacion                    shift and go to state 36
 
 state 27
 
-    (47) retorno -> RESERVADO valor PUNTOCOMA .
-
-    RESERVADO       reduce using rule 47 (retorno -> RESERVADO valor PUNTOCOMA .)
-    IDENTIFICADOR   reduce using rule 47 (retorno -> RESERVADO valor PUNTOCOMA .)
-    $end            reduce using rule 47 (retorno -> RESERVADO valor PUNTOCOMA .)
-    LLAVE_CERRADA   reduce using rule 47 (retorno -> RESERVADO valor PUNTOCOMA .)
     (21) argumentos -> argumento .
     (22) argumentos -> argumento . COMA argumentos
     (23) argumentos -> argumento . PUNTOCOMA argumentos
@@ -737,16 +473,6 @@ state 27
 
 state 28
 
-    (17) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (24) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> RESERVADO . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> RESERVADO . PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-
-    IDENTIFICADOR   shift and go to state 55
-    PARENTESIS_ABIERTO shift and go to state 56
     (24) argumento -> STRING .
 
     COMA            reduce using rule 24 (argumento -> STRING .)
@@ -756,10 +482,6 @@ state 28
 
 state 29
 
-    (27) asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos . PARENTESIS_CERRADO
-    (14) condicion -> RESERVADO PARENTESIS_ABIERTO argumentos . PARENTESIS_CERRADO bloque
-
-    PARENTESIS_CERRADO shift and go to state 57
     (25) argumento -> referencia .
 
     COMA            reduce using rule 25 (argumento -> referencia .)
@@ -769,13 +491,6 @@ state 29
 
 state 30
 
-    (35) argumentos -> argumento .
-    (36) argumentos -> argumento . COMA argumentos
-    (37) argumentos -> argumento . PUNTOCOMA argumentos
-
-    PARENTESIS_CERRADO reduce using rule 35 (argumentos -> argumento .)
-    COMA            shift and go to state 58
-    PUNTOCOMA       shift and go to state 59
     (26) argumento -> IDENTIFICADOR .
     (15) asignacion -> IDENTIFICADOR . ASIGNAR valor PUNTOCOMA
     (31) incremento -> IDENTIFICADOR . MASMAS
@@ -795,11 +510,6 @@ state 30
 
 state 31
 
-    (38) argumento -> STRING .
-
-    COMA            reduce using rule 38 (argumento -> STRING .)
-    PUNTOCOMA       reduce using rule 38 (argumento -> STRING .)
-    PARENTESIS_CERRADO reduce using rule 38 (argumento -> STRING .)
     (27) argumento -> asignacion .
 
     COMA            reduce using rule 27 (argumento -> asignacion .)
@@ -809,11 +519,6 @@ state 31
 
 state 32
 
-    (39) argumento -> referencia .
-
-    COMA            reduce using rule 39 (argumento -> referencia .)
-    PUNTOCOMA       reduce using rule 39 (argumento -> referencia .)
-    PARENTESIS_CERRADO reduce using rule 39 (argumento -> referencia .)
     (28) argumento -> incremento .
 
     COMA            reduce using rule 28 (argumento -> incremento .)
@@ -823,26 +528,6 @@ state 32
 
 state 33
 
-    (40) argumento -> IDENTIFICADOR .
-    (19) asignacion -> IDENTIFICADOR . ASIGNAR valor
-    (22) asignacion -> IDENTIFICADOR . ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> IDENTIFICADOR . ASIGNAR operacion
-    (26) asignacion -> IDENTIFICADOR . ASIGNAR cadena
-    (45) incremento -> IDENTIFICADOR . MASMAS
-    (28) comparacion -> IDENTIFICADOR . MENOR valor
-    (29) comparacion -> IDENTIFICADOR . MAYOR valor
-    (30) comparacion -> IDENTIFICADOR . MENOR_IGUAL valor
-    (31) comparacion -> IDENTIFICADOR . IGUAL valor
-
-    COMA            reduce using rule 40 (argumento -> IDENTIFICADOR .)
-    PUNTOCOMA       reduce using rule 40 (argumento -> IDENTIFICADOR .)
-    PARENTESIS_CERRADO reduce using rule 40 (argumento -> IDENTIFICADOR .)
-    ASIGNAR         shift and go to state 19
-    MASMAS          shift and go to state 60
-    MENOR           shift and go to state 20
-    MAYOR           shift and go to state 21
-    MENOR_IGUAL     shift and go to state 22
-    IGUAL           shift and go to state 23
     (29) argumento -> comparacion .
 
     COMA            reduce using rule 29 (argumento -> comparacion .)
@@ -852,11 +537,6 @@ state 33
 
 state 34
 
-    (41) argumento -> asignacion .
-
-    COMA            reduce using rule 41 (argumento -> asignacion .)
-    PUNTOCOMA       reduce using rule 41 (argumento -> asignacion .)
-    PARENTESIS_CERRADO reduce using rule 41 (argumento -> asignacion .)
     (30) referencia -> AMPERSON . IDENTIFICADOR
 
     IDENTIFICADOR   shift and go to state 48
@@ -864,21 +544,13 @@ state 34
 
 state 35
 
-    (42) argumento -> incremento .
+    (13) bloque -> LLAVE_ABIERTA declaraciones . LLAVE_CERRADA
 
-    COMA            reduce using rule 42 (argumento -> incremento .)
-    PUNTOCOMA       reduce using rule 42 (argumento -> incremento .)
-    PARENTESIS_CERRADO reduce using rule 42 (argumento -> incremento .)
     LLAVE_CERRADA   shift and go to state 49
 
 
 state 36
 
-    (43) argumento -> comparacion .
-
-    COMA            reduce using rule 43 (argumento -> comparacion .)
-    PUNTOCOMA       reduce using rule 43 (argumento -> comparacion .)
-    PARENTESIS_CERRADO reduce using rule 43 (argumento -> comparacion .)
     (19) valor -> IDENTIFICADOR .
 
     PUNTOCOMA       reduce using rule 19 (valor -> IDENTIFICADOR .)
@@ -892,9 +564,6 @@ state 36
 
 state 37
 
-    (44) referencia -> AMPERSON . IDENTIFICADOR
-
-    IDENTIFICADOR   shift and go to state 61
     (15) asignacion -> IDENTIFICADOR ASIGNAR valor . PUNTOCOMA
 
     PUNTOCOMA       shift and go to state 50
@@ -902,9 +571,6 @@ state 37
 
 state 38
 
-    (16) bloque -> LLAVE_ABIERTA declaraciones . LLAVE_CERRADA
-
-    LLAVE_CERRADA   shift and go to state 62
     (16) comparacion -> IDENTIFICADOR MENOR valor .
 
     RESERVADO       reduce using rule 16 (comparacion -> IDENTIFICADOR MENOR valor .)
@@ -918,16 +584,6 @@ state 38
 
 state 39
 
-    (32) valor -> IDENTIFICADOR .
-
-    MULT            reduce using rule 32 (valor -> IDENTIFICADOR .)
-    RESERVADO       reduce using rule 32 (valor -> IDENTIFICADOR .)
-    IDENTIFICADOR   reduce using rule 32 (valor -> IDENTIFICADOR .)
-    $end            reduce using rule 32 (valor -> IDENTIFICADOR .)
-    LLAVE_CERRADA   reduce using rule 32 (valor -> IDENTIFICADOR .)
-    COMA            reduce using rule 32 (valor -> IDENTIFICADOR .)
-    PUNTOCOMA       reduce using rule 32 (valor -> IDENTIFICADOR .)
-    PARENTESIS_CERRADO reduce using rule 32 (valor -> IDENTIFICADOR .)
     (17) comparacion -> IDENTIFICADOR MAYOR valor .
 
     RESERVADO       reduce using rule 17 (comparacion -> IDENTIFICADOR MAYOR valor .)
@@ -941,17 +597,6 @@ state 39
 
 state 40
 
-    (19) asignacion -> IDENTIFICADOR ASIGNAR valor .
-    (46) operacion -> valor . MULT valor
-
-    RESERVADO       reduce using rule 19 (asignacion -> IDENTIFICADOR ASIGNAR valor .)
-    IDENTIFICADOR   reduce using rule 19 (asignacion -> IDENTIFICADOR ASIGNAR valor .)
-    $end            reduce using rule 19 (asignacion -> IDENTIFICADOR ASIGNAR valor .)
-    LLAVE_CERRADA   reduce using rule 19 (asignacion -> IDENTIFICADOR ASIGNAR valor .)
-    COMA            reduce using rule 19 (asignacion -> IDENTIFICADOR ASIGNAR valor .)
-    PUNTOCOMA       reduce using rule 19 (asignacion -> IDENTIFICADOR ASIGNAR valor .)
-    PARENTESIS_CERRADO reduce using rule 19 (asignacion -> IDENTIFICADOR ASIGNAR valor .)
-    MULT            shift and go to state 63
     (18) comparacion -> IDENTIFICADOR MENOR_IGUAL valor .
 
     RESERVADO       reduce using rule 18 (comparacion -> IDENTIFICADOR MENOR_IGUAL valor .)
@@ -965,65 +610,11 @@ state 40
 
 state 41
 
-    (22) asignacion -> IDENTIFICADOR ASIGNAR operacion . PUNTOCOMA
-    (23) asignacion -> IDENTIFICADOR ASIGNAR operacion .
-
-  ! shift/reduce conflict for PUNTOCOMA resolved as shift
-    PUNTOCOMA       shift and go to state 64
-    RESERVADO       reduce using rule 23 (asignacion -> IDENTIFICADOR ASIGNAR operacion .)
-    IDENTIFICADOR   reduce using rule 23 (asignacion -> IDENTIFICADOR ASIGNAR operacion .)
-    $end            reduce using rule 23 (asignacion -> IDENTIFICADOR ASIGNAR operacion .)
-    LLAVE_CERRADA   reduce using rule 23 (asignacion -> IDENTIFICADOR ASIGNAR operacion .)
-    COMA            reduce using rule 23 (asignacion -> IDENTIFICADOR ASIGNAR operacion .)
-    PARENTESIS_CERRADO reduce using rule 23 (asignacion -> IDENTIFICADOR ASIGNAR operacion .)
-
-  ! PUNTOCOMA       [ reduce using rule 23 (asignacion -> IDENTIFICADOR ASIGNAR operacion .) ]
-
-
-state 42
-
-    (26) asignacion -> IDENTIFICADOR ASIGNAR cadena .
     (9) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO . bloque
     (13) bloque -> . LLAVE_ABIERTA declaraciones LLAVE_CERRADA
 
-    RESERVADO       reduce using rule 26 (asignacion -> IDENTIFICADOR ASIGNAR cadena .)
-    IDENTIFICADOR   reduce using rule 26 (asignacion -> IDENTIFICADOR ASIGNAR cadena .)
-    $end            reduce using rule 26 (asignacion -> IDENTIFICADOR ASIGNAR cadena .)
-    LLAVE_CERRADA   reduce using rule 26 (asignacion -> IDENTIFICADOR ASIGNAR cadena .)
-    COMA            reduce using rule 26 (asignacion -> IDENTIFICADOR ASIGNAR cadena .)
-    PUNTOCOMA       reduce using rule 26 (asignacion -> IDENTIFICADOR ASIGNAR cadena .)
-    PARENTESIS_CERRADO reduce using rule 26 (asignacion -> IDENTIFICADOR ASIGNAR cadena .)
+    LLAVE_ABIERTA   shift and go to state 16
 
-
-state 43
-
-    (34) cadena -> STRING .
-
-    RESERVADO       reduce using rule 34 (cadena -> STRING .)
-    IDENTIFICADOR   reduce using rule 34 (cadena -> STRING .)
-    $end            reduce using rule 34 (cadena -> STRING .)
-    LLAVE_CERRADA   reduce using rule 34 (cadena -> STRING .)
-    COMA            reduce using rule 34 (cadena -> STRING .)
-    PUNTOCOMA       reduce using rule 34 (cadena -> STRING .)
-    PARENTESIS_CERRADO reduce using rule 34 (cadena -> STRING .)
-
-
-state 44
-
-    (28) comparacion -> IDENTIFICADOR MENOR valor .
-
-    RESERVADO       reduce using rule 28 (comparacion -> IDENTIFICADOR MENOR valor .)
-    IDENTIFICADOR   reduce using rule 28 (comparacion -> IDENTIFICADOR MENOR valor .)
-    $end            reduce using rule 28 (comparacion -> IDENTIFICADOR MENOR valor .)
-    LLAVE_CERRADA   reduce using rule 28 (comparacion -> IDENTIFICADOR MENOR valor .)
-    COMA            reduce using rule 28 (comparacion -> IDENTIFICADOR MENOR valor .)
-    PUNTOCOMA       reduce using rule 28 (comparacion -> IDENTIFICADOR MENOR valor .)
-    PARENTESIS_CERRADO reduce using rule 28 (comparacion -> IDENTIFICADOR MENOR valor .)
-
-
-state 45
-
-    (29) comparacion -> IDENTIFICADOR MAYOR valor .
     bloque                         shift and go to state 51
 
 state 42
@@ -1037,39 +628,15 @@ state 43
 
     (14) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR valor PUNTOCOMA
 
-    RESERVADO       reduce using rule 29 (comparacion -> IDENTIFICADOR MAYOR valor .)
-    IDENTIFICADOR   reduce using rule 29 (comparacion -> IDENTIFICADOR MAYOR valor .)
-    $end            reduce using rule 29 (comparacion -> IDENTIFICADOR MAYOR valor .)
-    LLAVE_CERRADA   reduce using rule 29 (comparacion -> IDENTIFICADOR MAYOR valor .)
-    COMA            reduce using rule 29 (comparacion -> IDENTIFICADOR MAYOR valor .)
-    PUNTOCOMA       reduce using rule 29 (comparacion -> IDENTIFICADOR MAYOR valor .)
-    PARENTESIS_CERRADO reduce using rule 29 (comparacion -> IDENTIFICADOR MAYOR valor .)
+    ASIGNAR         shift and go to state 23
 
 
 state 44
 
-    (30) comparacion -> IDENTIFICADOR MENOR_IGUAL valor .
+    (10) funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO . PUNTOCOMA
+    (11) funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO . bloque
+    (13) bloque -> . LLAVE_ABIERTA declaraciones LLAVE_CERRADA
 
-    RESERVADO       reduce using rule 30 (comparacion -> IDENTIFICADOR MENOR_IGUAL valor .)
-    IDENTIFICADOR   reduce using rule 30 (comparacion -> IDENTIFICADOR MENOR_IGUAL valor .)
-    $end            reduce using rule 30 (comparacion -> IDENTIFICADOR MENOR_IGUAL valor .)
-    LLAVE_CERRADA   reduce using rule 30 (comparacion -> IDENTIFICADOR MENOR_IGUAL valor .)
-    COMA            reduce using rule 30 (comparacion -> IDENTIFICADOR MENOR_IGUAL valor .)
-    PUNTOCOMA       reduce using rule 30 (comparacion -> IDENTIFICADOR MENOR_IGUAL valor .)
-    PARENTESIS_CERRADO reduce using rule 30 (comparacion -> IDENTIFICADOR MENOR_IGUAL valor .)
-
-
-state 47
-
-    (31) comparacion -> IDENTIFICADOR IGUAL valor .
-
-    RESERVADO       reduce using rule 31 (comparacion -> IDENTIFICADOR IGUAL valor .)
-    IDENTIFICADOR   reduce using rule 31 (comparacion -> IDENTIFICADOR IGUAL valor .)
-    $end            reduce using rule 31 (comparacion -> IDENTIFICADOR IGUAL valor .)
-    LLAVE_CERRADA   reduce using rule 31 (comparacion -> IDENTIFICADOR IGUAL valor .)
-    COMA            reduce using rule 31 (comparacion -> IDENTIFICADOR IGUAL valor .)
-    PUNTOCOMA       reduce using rule 31 (comparacion -> IDENTIFICADOR IGUAL valor .)
-    PARENTESIS_CERRADO reduce using rule 31 (comparacion -> IDENTIFICADOR IGUAL valor .)
     PUNTOCOMA       shift and go to state 53
     LLAVE_ABIERTA   shift and go to state 16
 
@@ -1150,43 +717,6 @@ state 47
 
 state 48
 
-    (10) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO . bloque
-    (16) bloque -> . LLAVE_ABIERTA declaraciones LLAVE_CERRADA
-
-    LLAVE_ABIERTA   shift and go to state 18
-
-    bloque                         shift and go to state 65
-
-state 49
-
-    (11) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos . PARENTESIS_CERRADO bloque
-
-    PARENTESIS_CERRADO shift and go to state 66
-
-
-state 50
-
-    (17) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor . PUNTOCOMA
-    (18) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor .
-    (46) operacion -> valor . MULT valor
-
-  ! shift/reduce conflict for PUNTOCOMA resolved as shift
-    PUNTOCOMA       shift and go to state 67
-    RESERVADO       reduce using rule 18 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor .)
-    IDENTIFICADOR   reduce using rule 18 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor .)
-    $end            reduce using rule 18 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor .)
-    LLAVE_CERRADA   reduce using rule 18 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor .)
-    COMA            reduce using rule 18 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor .)
-    PARENTESIS_CERRADO reduce using rule 18 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor .)
-    MULT            shift and go to state 63
-
-  ! PUNTOCOMA       [ reduce using rule 18 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor .) ]
-
-
-state 51
-
-    (20) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion .
-    (21) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion . PUNTOCOMA
     (30) referencia -> AMPERSON IDENTIFICADOR .
 
     COMA            reduce using rule 30 (referencia -> AMPERSON IDENTIFICADOR .)
@@ -1198,41 +728,14 @@ state 49
 
     (13) bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .
 
-  ! shift/reduce conflict for PUNTOCOMA resolved as shift
-    RESERVADO       reduce using rule 20 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion .)
-    IDENTIFICADOR   reduce using rule 20 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion .)
-    $end            reduce using rule 20 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion .)
-    LLAVE_CERRADA   reduce using rule 20 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion .)
-    COMA            reduce using rule 20 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion .)
-    PARENTESIS_CERRADO reduce using rule 20 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion .)
-    PUNTOCOMA       shift and go to state 68
-
-  ! PUNTOCOMA       [ reduce using rule 20 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion .) ]
+    RESERVADO       reduce using rule 13 (bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .)
+    IDENTIFICADOR   reduce using rule 13 (bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .)
+    $end            reduce using rule 13 (bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .)
+    LLAVE_CERRADA   reduce using rule 13 (bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .)
 
 
 state 50
 
-    (24) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena . PUNTOCOMA
-    (25) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena .
-
-  ! shift/reduce conflict for PUNTOCOMA resolved as shift
-    PUNTOCOMA       shift and go to state 69
-    RESERVADO       reduce using rule 25 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena .)
-    IDENTIFICADOR   reduce using rule 25 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena .)
-    $end            reduce using rule 25 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena .)
-    LLAVE_CERRADA   reduce using rule 25 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena .)
-    COMA            reduce using rule 25 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena .)
-    PARENTESIS_CERRADO reduce using rule 25 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena .)
-
-  ! PUNTOCOMA       [ reduce using rule 25 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena .) ]
-
-
-state 53
-
-    (12) funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO . bloque
-    (16) bloque -> . LLAVE_ABIERTA declaraciones LLAVE_CERRADA
-
-    LLAVE_ABIERTA   shift and go to state 18
     (15) asignacion -> IDENTIFICADOR ASIGNAR valor PUNTOCOMA .
 
     RESERVADO       reduce using rule 15 (asignacion -> IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
@@ -1243,379 +746,59 @@ state 53
     PUNTOCOMA       reduce using rule 15 (asignacion -> IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
     PARENTESIS_CERRADO reduce using rule 15 (asignacion -> IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
 
-    bloque                         shift and go to state 70
 
 state 51
 
-    (13) funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos . PARENTESIS_CERRADO bloque
+    (9) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .
 
-    PARENTESIS_CERRADO shift and go to state 71
+    RESERVADO       reduce using rule 9 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
+    IDENTIFICADOR   reduce using rule 9 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
+    $end            reduce using rule 9 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
+    LLAVE_CERRADA   reduce using rule 9 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
 
 
 state 52
 
-    (17) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR valor
-    (20) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR operacion
-    (21) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR operacion PUNTOCOMA
-    (24) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> RESERVADO IDENTIFICADOR . ASIGNAR cadena
+    (14) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .
 
-    ASIGNAR         shift and go to state 25
+    RESERVADO       reduce using rule 14 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
+    IDENTIFICADOR   reduce using rule 14 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
+    $end            reduce using rule 14 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
+    LLAVE_CERRADA   reduce using rule 14 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
+    COMA            reduce using rule 14 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
+    PUNTOCOMA       reduce using rule 14 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
+    PARENTESIS_CERRADO reduce using rule 14 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
 
 
-state 56
-
-    (27) asignacion -> RESERVADO PARENTESIS_ABIERTO . argumentos PARENTESIS_CERRADO
-    (35) argumentos -> . argumento
-    (36) argumentos -> . argumento COMA argumentos
-    (37) argumentos -> . argumento PUNTOCOMA argumentos
-    (38) argumento -> . STRING
-    (39) argumento -> . referencia
-    (40) argumento -> . IDENTIFICADOR
-    (41) argumento -> . asignacion
-    (42) argumento -> . incremento
-    (43) argumento -> . comparacion
-    (44) referencia -> . AMPERSON IDENTIFICADOR
-    (17) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor
-    (19) asignacion -> . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (22) asignacion -> . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> . IDENTIFICADOR ASIGNAR operacion
-    (24) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena
-    (26) asignacion -> . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    (45) incremento -> . IDENTIFICADOR MASMAS
-    (28) comparacion -> . IDENTIFICADOR MENOR valor
-    (29) comparacion -> . IDENTIFICADOR MAYOR valor
-    (30) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
-    (31) comparacion -> . IDENTIFICADOR IGUAL valor
-
-    STRING          shift and go to state 31
-    IDENTIFICADOR   shift and go to state 33
-    AMPERSON        shift and go to state 37
-    RESERVADO       shift and go to state 28
-
-    argumentos                     shift and go to state 72
-    argumento                      shift and go to state 30
-    referencia                     shift and go to state 32
-    asignacion                     shift and go to state 34
-    incremento                     shift and go to state 35
-    comparacion                    shift and go to state 36
-
-state 57
 state 53
 
-    (27) asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .
-    (14) condicion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO . bloque
-    (16) bloque -> . LLAVE_ABIERTA declaraciones LLAVE_CERRADA
+    (10) funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA .
 
-    RESERVADO       reduce using rule 27 (asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .)
-    IDENTIFICADOR   reduce using rule 27 (asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .)
-    $end            reduce using rule 27 (asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .)
-    LLAVE_CERRADA   reduce using rule 27 (asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .)
-    LLAVE_ABIERTA   shift and go to state 18
+    RESERVADO       reduce using rule 10 (funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA .)
+    IDENTIFICADOR   reduce using rule 10 (funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA .)
+    $end            reduce using rule 10 (funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA .)
+    LLAVE_CERRADA   reduce using rule 10 (funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA .)
 
-    bloque                         shift and go to state 73
 
 state 54
 
-    (36) argumentos -> argumento COMA . argumentos
-    (35) argumentos -> . argumento
-    (36) argumentos -> . argumento COMA argumentos
-    (37) argumentos -> . argumento PUNTOCOMA argumentos
-    (38) argumento -> . STRING
-    (39) argumento -> . referencia
-    (40) argumento -> . IDENTIFICADOR
-    (41) argumento -> . asignacion
-    (42) argumento -> . incremento
-    (43) argumento -> . comparacion
-    (44) referencia -> . AMPERSON IDENTIFICADOR
-    (17) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor
-    (19) asignacion -> . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (22) asignacion -> . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> . IDENTIFICADOR ASIGNAR operacion
-    (24) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena
-    (26) asignacion -> . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    (45) incremento -> . IDENTIFICADOR MASMAS
-    (28) comparacion -> . IDENTIFICADOR MENOR valor
-    (29) comparacion -> . IDENTIFICADOR MAYOR valor
-    (30) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
-    (31) comparacion -> . IDENTIFICADOR IGUAL valor
+    (11) funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .
 
-    STRING          shift and go to state 31
-    IDENTIFICADOR   shift and go to state 33
-    AMPERSON        shift and go to state 37
-    RESERVADO       shift and go to state 28
+    RESERVADO       reduce using rule 11 (funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
+    IDENTIFICADOR   reduce using rule 11 (funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
+    $end            reduce using rule 11 (funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
+    LLAVE_CERRADA   reduce using rule 11 (funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
 
-    argumento                      shift and go to state 30
-    argumentos                     shift and go to state 74
-    referencia                     shift and go to state 32
-    asignacion                     shift and go to state 34
-    incremento                     shift and go to state 35
-    comparacion                    shift and go to state 36
 
 state 55
 
-    (37) argumentos -> argumento PUNTOCOMA . argumentos
-    (35) argumentos -> . argumento
-    (36) argumentos -> . argumento COMA argumentos
-    (37) argumentos -> . argumento PUNTOCOMA argumentos
-    (38) argumento -> . STRING
-    (39) argumento -> . referencia
-    (40) argumento -> . IDENTIFICADOR
-    (41) argumento -> . asignacion
-    (42) argumento -> . incremento
-    (43) argumento -> . comparacion
-    (44) referencia -> . AMPERSON IDENTIFICADOR
-    (17) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-    (18) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR valor
-    (19) asignacion -> . IDENTIFICADOR ASIGNAR valor
-    (20) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion
-    (21) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (22) asignacion -> . IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-    (23) asignacion -> . IDENTIFICADOR ASIGNAR operacion
-    (24) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-    (25) asignacion -> . RESERVADO IDENTIFICADOR ASIGNAR cadena
-    (26) asignacion -> . IDENTIFICADOR ASIGNAR cadena
-    (27) asignacion -> . RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    (45) incremento -> . IDENTIFICADOR MASMAS
-    (28) comparacion -> . IDENTIFICADOR MENOR valor
-    (29) comparacion -> . IDENTIFICADOR MAYOR valor
-    (30) comparacion -> . IDENTIFICADOR MENOR_IGUAL valor
-    (31) comparacion -> . IDENTIFICADOR IGUAL valor
-
-    STRING          shift and go to state 31
-    IDENTIFICADOR   shift and go to state 33
-    AMPERSON        shift and go to state 37
-    RESERVADO       shift and go to state 28
     (22) argumentos -> argumento COMA argumentos .
 
     PARENTESIS_CERRADO reduce using rule 22 (argumentos -> argumento COMA argumentos .)
 
-    argumento                      shift and go to state 30
-    argumentos                     shift and go to state 75
-    referencia                     shift and go to state 32
-    asignacion                     shift and go to state 34
-    incremento                     shift and go to state 35
-    comparacion                    shift and go to state 36
 
 state 56
 
-    (45) incremento -> IDENTIFICADOR MASMAS .
-
-    COMA            reduce using rule 45 (incremento -> IDENTIFICADOR MASMAS .)
-    PUNTOCOMA       reduce using rule 45 (incremento -> IDENTIFICADOR MASMAS .)
-    PARENTESIS_CERRADO reduce using rule 45 (incremento -> IDENTIFICADOR MASMAS .)
-
-
-state 61
-
-    (44) referencia -> AMPERSON IDENTIFICADOR .
-
-    COMA            reduce using rule 44 (referencia -> AMPERSON IDENTIFICADOR .)
-    PUNTOCOMA       reduce using rule 44 (referencia -> AMPERSON IDENTIFICADOR .)
-    PARENTESIS_CERRADO reduce using rule 44 (referencia -> AMPERSON IDENTIFICADOR .)
-
-
-state 62
-
-    (16) bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .
-
-    RESERVADO       reduce using rule 16 (bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .)
-    IDENTIFICADOR   reduce using rule 16 (bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .)
-    $end            reduce using rule 16 (bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .)
-    LLAVE_CERRADA   reduce using rule 16 (bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA .)
-
-
-state 63
-
-    (46) operacion -> valor MULT . valor
-    (32) valor -> . IDENTIFICADOR
-    (33) valor -> . NUMERO
-
-    IDENTIFICADOR   shift and go to state 39
-    NUMERO          shift and go to state 17
-
-    valor                          shift and go to state 76
-
-state 64
-
-    (22) asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .
-
-    RESERVADO       reduce using rule 22 (asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    IDENTIFICADOR   reduce using rule 22 (asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    $end            reduce using rule 22 (asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    LLAVE_CERRADA   reduce using rule 22 (asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    COMA            reduce using rule 22 (asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    PUNTOCOMA       reduce using rule 22 (asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    PARENTESIS_CERRADO reduce using rule 22 (asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-
-
-state 65
-
-    (10) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .
-
-    RESERVADO       reduce using rule 10 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
-    IDENTIFICADOR   reduce using rule 10 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
-    $end            reduce using rule 10 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
-    LLAVE_CERRADA   reduce using rule 10 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
-
-
-state 66
-
-    (11) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO . bloque
-    (16) bloque -> . LLAVE_ABIERTA declaraciones LLAVE_CERRADA
-
-    LLAVE_ABIERTA   shift and go to state 18
-
-    bloque                         shift and go to state 77
-
-state 67
-
-    (17) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .
-
-    RESERVADO       reduce using rule 17 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
-    IDENTIFICADOR   reduce using rule 17 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
-    $end            reduce using rule 17 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
-    LLAVE_CERRADA   reduce using rule 17 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
-    COMA            reduce using rule 17 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
-    PUNTOCOMA       reduce using rule 17 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
-    PARENTESIS_CERRADO reduce using rule 17 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA .)
-
-
-state 68
-
-    (21) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .
-
-    RESERVADO       reduce using rule 21 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    IDENTIFICADOR   reduce using rule 21 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    $end            reduce using rule 21 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    LLAVE_CERRADA   reduce using rule 21 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    COMA            reduce using rule 21 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    PUNTOCOMA       reduce using rule 21 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-    PARENTESIS_CERRADO reduce using rule 21 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA .)
-
-
-state 69
-
-    (24) asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA .
-
-    RESERVADO       reduce using rule 24 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA .)
-    IDENTIFICADOR   reduce using rule 24 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA .)
-    $end            reduce using rule 24 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA .)
-    LLAVE_CERRADA   reduce using rule 24 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA .)
-    COMA            reduce using rule 24 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA .)
-    PUNTOCOMA       reduce using rule 24 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA .)
-    PARENTESIS_CERRADO reduce using rule 24 (asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA .)
-
-
-state 70
-
-    (12) funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .
-
-    RESERVADO       reduce using rule 12 (funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
-    IDENTIFICADOR   reduce using rule 12 (funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
-    $end            reduce using rule 12 (funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
-    LLAVE_CERRADA   reduce using rule 12 (funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque .)
-
-
-state 71
-
-    (13) funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO . bloque
-    (16) bloque -> . LLAVE_ABIERTA declaraciones LLAVE_CERRADA
-
-    LLAVE_ABIERTA   shift and go to state 18
-
-    bloque                         shift and go to state 78
-
-state 72
-
-    (27) asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos . PARENTESIS_CERRADO
-
-    PARENTESIS_CERRADO shift and go to state 79
-
-
-state 73
-
-    (14) condicion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .
-
-    RESERVADO       reduce using rule 14 (condicion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    IDENTIFICADOR   reduce using rule 14 (condicion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    $end            reduce using rule 14 (condicion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    LLAVE_CERRADA   reduce using rule 14 (condicion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-
-
-state 74
-
-    (36) argumentos -> argumento COMA argumentos .
-
-    PARENTESIS_CERRADO reduce using rule 36 (argumentos -> argumento COMA argumentos .)
-
-
-state 75
-
-    (37) argumentos -> argumento PUNTOCOMA argumentos .
-
-    PARENTESIS_CERRADO reduce using rule 37 (argumentos -> argumento PUNTOCOMA argumentos .)
-
-
-state 76
-
-    (46) operacion -> valor MULT valor .
-
-    PUNTOCOMA       reduce using rule 46 (operacion -> valor MULT valor .)
-    RESERVADO       reduce using rule 46 (operacion -> valor MULT valor .)
-    IDENTIFICADOR   reduce using rule 46 (operacion -> valor MULT valor .)
-    $end            reduce using rule 46 (operacion -> valor MULT valor .)
-    LLAVE_CERRADA   reduce using rule 46 (operacion -> valor MULT valor .)
-    COMA            reduce using rule 46 (operacion -> valor MULT valor .)
-    PARENTESIS_CERRADO reduce using rule 46 (operacion -> valor MULT valor .)
-
-
-state 77
-
-    (11) funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .
-
-    RESERVADO       reduce using rule 11 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    IDENTIFICADOR   reduce using rule 11 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    $end            reduce using rule 11 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    LLAVE_CERRADA   reduce using rule 11 (funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-
-
-state 78
-
-    (13) funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .
-
-    RESERVADO       reduce using rule 13 (funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    IDENTIFICADOR   reduce using rule 13 (funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    $end            reduce using rule 13 (funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-    LLAVE_CERRADA   reduce using rule 13 (funcion -> RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque .)
-
-
-state 79
-
-    (27) asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .
-
-    COMA            reduce using rule 27 (asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .)
-    PUNTOCOMA       reduce using rule 27 (asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .)
-    PARENTESIS_CERRADO reduce using rule 27 (asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO .)
-
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for PUNTOCOMA in state 41 resolved as shift
-WARNING: shift/reduce conflict for PUNTOCOMA in state 50 resolved as shift
-WARNING: shift/reduce conflict for PUNTOCOMA in state 51 resolved as shift
-WARNING: shift/reduce conflict for PUNTOCOMA in state 52 resolved as shift
     (23) argumentos -> argumento PUNTOCOMA argumentos .
 
     PARENTESIS_CERRADO reduce using rule 23 (argumentos -> argumento PUNTOCOMA argumentos .)

@@ -1,6 +1,7 @@
 from ply import lex, yacc
 import json
 variables = {}
+arrayError = []
 
 tokens = (
     'NUMERO',
@@ -151,6 +152,7 @@ def p_valor(p):
         p[0] = variables[p[1]]
     else:
         print(f"Error semántico: La variable '{p[1]}' no ha sido declarada.")
+        arrayError.append(f"Error semántico: La variable '{p[1]}' no ha sido declarada")
         p[0] = None
 
     p[0] = "valor → " + str(p[1])
@@ -227,6 +229,7 @@ lexer = lex.lex()
 
 
 def Run(input_string):
+    arrayError.clear()
     testData = "".join(input_string)
     print(testData)
     # Darle la cadena de entrada al lexer
@@ -244,6 +247,10 @@ def Run(input_string):
     print(result)
     return result
 
+def getArrayErrors():
+    diccionarioData = dict(zip(range(len(arrayError)), arrayError))
+    return diccionarioData
+
 # Ejecutar el análisis
-Run(["int x = 5;"
-      "x = hola;"])
+Run(["function main(){int x = 5;"
+        "x = hola;}"])
