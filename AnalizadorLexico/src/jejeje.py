@@ -114,6 +114,7 @@ def p_asignacion(p):
     '''
     asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
                | IDENTIFICADOR ASIGNAR valor PUNTOCOMA
+               | IDENTIFICADOR ASIGNAR valor
     '''
     # Verificar si la variable ha sido previamente declarada
     variable_name = p[2]
