@@ -106,7 +106,7 @@ function errorSemantica(data){
     Object.entries(data).forEach(data =>{
         console.log(data)
         const div = document.createElement('span')
-        div.className = 'text-2xl font-thin badge badge-neutral'
+        div.className = 'text-2xl font-normal badge badge-neutral'
         div.innerHTML = data[1]
         semantico.appendChild(div)
     })

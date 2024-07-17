@@ -5,6 +5,12 @@ def js_to_py(js_code):
     # Reemplaza var declarations with let
     js_code = re.sub(r'var (\w+);', r'\1 = ', js_code)
     
+    js_code = re.sub(r'var (\w+)', r'\1', js_code)
+
+    js_code = re.sub(r'let (\w+)', r'\1', js_code)
+
+    js_code = re.sub(r'let (\w+);', r'\1', js_code)
+
     # Convert function declarations
     js_code = re.sub(r'(function\s+(\w+)\s*\(\s*\))\s*\{', r'def \2():\n\t', js_code)
     
@@ -24,7 +30,10 @@ def js_to_py(js_code):
     js_code = re.sub(r'return\s+(.*)\s*;', 'return \1', js_code)
     
     # Elimina la última llave }
+    js_code = re.sub(r'{\s*$', '', js_code)
+    js_code = re.sub(r'{', '', js_code)
     js_code = re.sub(r'}\s*$', '', js_code)
+    js_code = re.sub(r'}', '', js_code)
     
     # Utiliza textwrap.dedent para manejar la indentación dentro de las funciones
     js_code = textwrap.dedent(js_code)
