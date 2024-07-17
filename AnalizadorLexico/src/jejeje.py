@@ -25,6 +25,7 @@ tokens = (
     'RESTA',
     'DIV',
     'MENOR_IGUAL',
+    'MAYOR_IGUAL',
 )
 
 # Expresiones regulares para los tokens
@@ -46,7 +47,9 @@ t_LLAVE_CERRADA = r'\}'
 t_MENOR = r'\<'
 t_MAYOR = r'\>'
 t_MENOR_IGUAL = r'\<='
+t_MAYOR_IGUAL = r'\>='
 t_AMPERSON = r'\&'
+t_IGUAL = r'\=='
 
 # Funciones de manejo de tokens
 def t_NUMERO(t):
@@ -113,8 +116,16 @@ def p_bloque(p):
 def p_asignacion(p):
     '''
     asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR valor
+               | RESERVADO IDENTIFICADOR ASIGNAR valor
+               | IDENTIFICADOR ASIGNAR valor 
+               | RESERVADO IDENTIFICADOR ASIGNAR operacion
+               | RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
+               | IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
+               | IDENTIFICADOR ASIGNAR operacion
+               | RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
+               | RESERVADO IDENTIFICADOR ASIGNAR cadena
+               | IDENTIFICADOR ASIGNAR cadena
+               | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
     '''
     # Verificar si la variable ha sido previamente declarada
     variable_name = p[2]
@@ -138,6 +149,8 @@ def p_comparacion(p):
     comparacion : IDENTIFICADOR MENOR valor
                 | IDENTIFICADOR MAYOR valor
                 | IDENTIFICADOR MENOR_IGUAL valor
+                | IDENTIFICADOR MAYOR_IGUAL valor
+                | IDENTIFICADOR IGUAL valor
     '''
     p[0] = "comparacion → " + " ".join(p[1:])
 
@@ -157,6 +170,12 @@ def p_valor(p):
         p[0] = None
 
     p[0] = "valor → " + str(p[1])
+
+def p_cadena(p):
+    '''
+    cadena : STRING
+    '''
+    p[0] = "string → " + str(p[1])
 
 def p_argumentos(p):
     '''

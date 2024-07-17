@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AMPERSON ASIGNAR COMA DIV IDENTIFICADOR IGUAL LLAVE_ABIERTA LLAVE_CERRADA MASMAS MAYOR MENOR MENOR_IGUAL MULT NUMERO PARENTESIS_ABIERTO PARENTESIS_CERRADO PUNTOCOMA RESERVADO RESTA STRING SUMA\n    declaraciones : declaracion declaraciones\n                  | declaracion\n    \n    declaracion : asignacion\n                | funcion\n                | inclusion\n                | retorno\n                | comparacion\n    \n    inclusion : RESERVADO RESERVADO\n    \n    funcion : RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque\n            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA\n            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque\n            | RESERVADO bloque\n\n    \n    bloque : LLAVE_ABIERTA declaraciones LLAVE_CERRADA\n    \n    asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR valor PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR valor\n    \n    comparacion : IDENTIFICADOR MENOR valor\n                | IDENTIFICADOR MAYOR valor\n                | IDENTIFICADOR MENOR_IGUAL valor\n    \n    valor : IDENTIFICADOR\n          | NUMERO\n    \n    argumentos : argumento\n               | argumento COMA argumentos\n               | argumento PUNTOCOMA argumentos\n    \n    argumento : STRING\n              | referencia\n              | IDENTIFICADOR\n              | asignacion\n              | incremento\n              | comparacion\n    \n    referencia : AMPERSON IDENTIFICADOR\n    \n    incremento : IDENTIFICADOR MASMAS\n    \n    operacion : valor MULT valor\n              | valor SUMA valor\n              | valor RESTA valor\n              | valor DIV valor\n    \n    retorno : RESERVADO valor PUNTOCOMA\n    '
+_lr_signature = 'AMPERSON ASIGNAR COMA DIV IDENTIFICADOR IGUAL LLAVE_ABIERTA LLAVE_CERRADA MASMAS MAYOR MAYOR_IGUAL MENOR MENOR_IGUAL MULT NUMERO PARENTESIS_ABIERTO PARENTESIS_CERRADO PUNTOCOMA RESERVADO RESTA STRING SUMA\n    declaraciones : declaracion declaraciones\n                  | declaracion\n    \n    declaracion : asignacion\n                | funcion\n                | inclusion\n                | retorno\n                | comparacion\n    \n    inclusion : RESERVADO RESERVADO\n    \n    funcion : RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque\n            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA\n            | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque\n            | RESERVADO bloque\n\n    \n    bloque : LLAVE_ABIERTA declaraciones LLAVE_CERRADA\n    \n    asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA\n               | RESERVADO IDENTIFICADOR ASIGNAR valor\n               | IDENTIFICADOR ASIGNAR valor \n               | RESERVADO IDENTIFICADOR ASIGNAR operacion\n               | RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR operacion PUNTOCOMA\n               | IDENTIFICADOR ASIGNAR operacion\n               | RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA\n               | RESERVADO IDENTIFICADOR ASIGNAR cadena\n               | IDENTIFICADOR ASIGNAR cadena\n               | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO\n    \n    comparacion : IDENTIFICADOR MENOR valor\n                | IDENTIFICADOR MAYOR valor\n                | IDENTIFICADOR MENOR_IGUAL valor\n                | IDENTIFICADOR MAYOR_IGUAL valor\n                | IDENTIFICADOR IGUAL valor\n    \n    valor : IDENTIFICADOR\n          | NUMERO\n    \n    cadena : STRING\n    \n    argumentos : argumento\n               | argumento COMA argumentos\n               | argumento PUNTOCOMA argumentos\n    \n    argumento : STRING\n              | referencia\n              | IDENTIFICADOR\n              | asignacion\n              | incremento\n              | comparacion\n    \n    referencia : AMPERSON IDENTIFICADOR\n    \n    incremento : IDENTIFICADOR MASMAS\n    \n    operacion : valor MULT valor\n              | valor SUMA valor\n              | valor RESTA valor\n              | valor DIV valor\n    \n    retorno : RESERVADO valor PUNTOCOMA\n    '
     
-_lr_action_items = {'RESERVADO':([0,2,3,4,5,6,7,8,11,14,15,16,17,24,36,37,38,39,40,45,46,49,50,51,52,53,54,],[8,8,-3,-4,-5,-6,-7,11,-8,25,-12,8,-21,-37,-20,-16,-17,-18,-19,25,25,-13,-15,-9,-14,-10,-11,]),'IDENTIFICADOR':([0,2,3,4,5,6,7,8,11,14,15,16,17,18,19,20,21,23,24,25,34,36,37,38,39,40,45,46,49,50,51,52,53,54,],[9,9,-3,-4,-5,-6,-7,12,-8,30,-12,9,-21,36,36,36,36,36,-37,43,48,-20,-16,-17,-18,-19,30,30,-13,-15,-9,-14,-10,-11,]),'$end':([1,2,3,4,5,6,7,10,11,15,17,24,36,37,38,39,40,49,50,51,52,53,54,],[0,-2,-3,-4,-5,-6,-7,-1,-8,-12,-21,-37,-20,-16,-17,-18,-19,-13,-15,-9,-14,-10,-11,]),'LLAVE_CERRADA':([2,3,4,5,6,7,10,11,15,17,24,35,36,37,38,39,40,49,50,51,52,53,54,],[-2,-3,-4,-5,-6,-7,-1,-8,-12,-21,-37,49,-20,-16,-17,-18,-19,-13,-15,-9,-14,-10,-11,]),'PARENTESIS_ABIERTO':([8,11,],[14,22,]),'LLAVE_ABIERTA':([8,41,44,],[16,16,16,]),'NUMERO':([8,18,19,20,21,23,],[17,17,17,17,17,17,]),'ASIGNAR':([9,12,30,43,],[18,23,18,23,]),'MENOR':([9,30,],[19,19,]),'MAYOR':([9,30,],[20,20,]),'MENOR_IGUAL':([9,30,],[21,21,]),'PUNTOCOMA':([12,13,17,27,28,29,30,31,32,33,36,37,38,39,40,42,44,47,48,50,52,],[-20,24,-21,46,-25,-26,-27,-28,-29,-30,-20,50,-17,-18,-19,52,53,-32,-31,-15,-14,]),'STRING':([14,45,46,],[28,28,28,]),'AMPERSON':([14,45,46,],[34,34,34,]),'COMA':([17,27,28,29,30,31,32,33,36,37,38,39,40,47,48,50,52,],[-21,45,-25,-26,-27,-28,-29,-30,-20,-16,-17,-18,-19,-32,-31,-15,-14,]),'PARENTESIS_CERRADO':([17,22,26,27,28,29,30,31,32,33,36,37,38,39,40,47,48,50,52,55,56,],[-21,41,44,-22,-25,-26,-27,-28,-29,-30,-20,-16,-17,-18,-19,-32,-31,-15,-14,-23,-24,]),'MASMAS':([30,],[47,]),}
+_lr_action_items = {'RESERVADO':([0,2,3,4,5,6,7,8,11,14,15,16,17,26,38,39,40,41,42,43,44,45,46,47,49,50,51,53,54,55,56,59,64,65,66,67,68,70,71,74,75,76,77,],[8,8,-3,-4,-5,-6,-7,11,-8,27,-12,8,-31,-48,-30,-16,-20,-23,-32,-25,-26,-27,-28,-29,-15,-17,-22,27,-24,27,27,-13,-19,-9,-14,-18,-21,-10,-11,-44,-45,-46,-47,]),'IDENTIFICADOR':([0,2,3,4,5,6,7,8,11,14,15,16,17,18,19,20,21,22,23,25,26,27,36,38,39,40,41,42,43,44,45,46,47,49,50,51,53,54,55,56,59,60,61,62,63,64,65,66,67,68,70,71,74,75,76,77,],[9,9,-3,-4,-5,-6,-7,12,-8,32,-12,9,-31,38,38,38,38,38,38,38,-48,52,58,-30,-16,-20,-23,-32,-25,-26,-27,-28,-29,-15,-17,-22,32,-24,32,32,-13,38,38,38,38,-19,-9,-14,-18,-21,-10,-11,-44,-45,-46,-47,]),'$end':([1,2,3,4,5,6,7,10,11,15,17,26,38,39,40,41,42,43,44,45,46,47,49,50,51,54,59,64,65,66,67,68,70,71,74,75,76,77,],[0,-2,-3,-4,-5,-6,-7,-1,-8,-12,-31,-48,-30,-16,-20,-23,-32,-25,-26,-27,-28,-29,-15,-17,-22,-24,-13,-19,-9,-14,-18,-21,-10,-11,-44,-45,-46,-47,]),'LLAVE_CERRADA':([2,3,4,5,6,7,10,11,15,17,26,37,38,39,40,41,42,43,44,45,46,47,49,50,51,54,59,64,65,66,67,68,70,71,74,75,76,77,],[-2,-3,-4,-5,-6,-7,-1,-8,-12,-31,-48,59,-30,-16,-20,-23,-32,-25,-26,-27,-28,-29,-15,-17,-22,-24,-13,-19,-9,-14,-18,-21,-10,-11,-44,-45,-46,-47,]),'PARENTESIS_ABIERTO':([8,11,27,],[14,24,53,]),'LLAVE_ABIERTA':([8,48,54,],[16,16,16,]),'NUMERO':([8,18,19,20,21,22,23,25,60,61,62,63,],[17,17,17,17,17,17,17,17,17,17,17,17,]),'ASIGNAR':([9,12,32,52,],[18,25,18,25,]),'MENOR':([9,32,],[19,19,]),'MAYOR':([9,32,],[20,20,]),'MENOR_IGUAL':([9,32,],[21,21,]),'MAYOR_IGUAL':([9,32,],[22,22,]),'IGUAL':([9,32,],[23,23,]),'PUNTOCOMA':([12,13,17,29,30,31,32,33,34,35,38,39,40,41,42,43,44,45,46,47,49,50,51,54,57,58,64,66,67,68,74,75,76,77,78,],[-30,26,-31,56,-36,-37,-38,-39,-40,-41,-30,-16,64,-23,-32,-25,-26,-27,-28,-29,66,67,68,70,-43,-42,-19,-14,-18,-21,-44,-45,-46,-47,-24,]),'STRING':([14,18,25,53,55,56,],[30,42,42,30,30,30,]),'AMPERSON':([14,53,55,56,],[36,36,36,36,]),'MULT':([17,38,39,49,],[-31,-30,60,60,]),'SUMA':([17,38,39,49,],[-31,-30,61,61,]),'RESTA':([17,38,39,49,],[-31,-30,62,62,]),'DIV':([17,38,39,49,],[-31,-30,63,63,]),'COMA':([17,29,30,31,32,33,34,35,38,39,40,41,42,43,44,45,46,47,49,50,51,57,58,64,66,67,68,74,75,76,77,78,],[-31,55,-36,-37,-38,-39,-40,-41,-30,-16,-20,-23,-32,-25,-26,-27,-28,-29,-15,-17,-22,-43,-42,-19,-14,-18,-21,-44,-45,-46,-47,-24,]),'PARENTESIS_CERRADO':([17,24,28,29,30,31,32,33,34,35,38,39,40,41,42,43,44,45,46,47,49,50,51,57,58,64,66,67,68,69,72,73,74,75,76,77,78,],[-31,48,54,-33,-36,-37,-38,-39,-40,-41,-30,-16,-20,-23,-32,-25,-26,-27,-28,-29,-15,-17,-22,-43,-42,-19,-14,-18,-21,78,-34,-35,-44,-45,-46,-47,-24,]),'MASMAS':([32,],[57,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'declaraciones':([0,2,16,],[1,10,35,]),'declaracion':([0,2,16,],[2,2,2,]),'asignacion':([0,2,14,16,45,46,],[3,3,31,3,31,31,]),'funcion':([0,2,16,],[4,4,4,]),'inclusion':([0,2,16,],[5,5,5,]),'retorno':([0,2,16,],[6,6,6,]),'comparacion':([0,2,14,16,45,46,],[7,7,33,7,33,33,]),'valor':([8,18,19,20,21,23,],[13,37,38,39,40,42,]),'bloque':([8,41,44,],[15,51,54,]),'argumentos':([14,45,46,],[26,55,56,]),'argumento':([14,45,46,],[27,27,27,]),'referencia':([14,45,46,],[29,29,29,]),'incremento':([14,45,46,],[32,32,32,]),}
+_lr_goto_items = {'declaraciones':([0,2,16,],[1,10,37,]),'declaracion':([0,2,16,],[2,2,2,]),'asignacion':([0,2,14,16,53,55,56,],[3,3,33,3,33,33,33,]),'funcion':([0,2,16,],[4,4,4,]),'inclusion':([0,2,16,],[5,5,5,]),'retorno':([0,2,16,],[6,6,6,]),'comparacion':([0,2,14,16,53,55,56,],[7,7,35,7,35,35,35,]),'valor':([8,18,19,20,21,22,23,25,60,61,62,63,],[13,39,43,44,45,46,47,49,74,75,76,77,]),'bloque':([8,48,54,],[15,65,71,]),'argumentos':([14,53,55,56,],[28,69,72,73,]),'argumento':([14,53,55,56,],[29,29,29,29,]),'referencia':([14,53,55,56,],[31,31,31,31,]),'incremento':([14,53,55,56,],[34,34,34,34,]),'operacion':([18,25,],[40,50,]),'cadena':([18,25,],[41,51,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,41 +27,52 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> declaraciones","S'",1,None,None,None),
-  ('declaraciones -> declaracion declaraciones','declaraciones',2,'p_declaraciones','jejeje.py',73),
-  ('declaraciones -> declaracion','declaraciones',1,'p_declaraciones','jejeje.py',74),
-  ('declaracion -> asignacion','declaracion',1,'p_declaracion','jejeje.py',83),
-  ('declaracion -> funcion','declaracion',1,'p_declaracion','jejeje.py',84),
-  ('declaracion -> inclusion','declaracion',1,'p_declaracion','jejeje.py',85),
-  ('declaracion -> retorno','declaracion',1,'p_declaracion','jejeje.py',86),
-  ('declaracion -> comparacion','declaracion',1,'p_declaracion','jejeje.py',87),
-  ('inclusion -> RESERVADO RESERVADO','inclusion',2,'p_inclusion','jejeje.py',93),
-  ('funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','jejeje.py',99),
-  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA','funcion',5,'p_funcion','jejeje.py',100),
-  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','jejeje.py',101),
-  ('funcion -> RESERVADO bloque','funcion',2,'p_funcion','jejeje.py',102),
-  ('bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA','bloque',3,'p_bloque','jejeje.py',109),
-  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA','asignacion',5,'p_asignacion','jejeje.py',115),
-  ('asignacion -> IDENTIFICADOR ASIGNAR valor PUNTOCOMA','asignacion',4,'p_asignacion','jejeje.py',116),
-  ('asignacion -> IDENTIFICADOR ASIGNAR valor','asignacion',3,'p_asignacion','jejeje.py',117),
-  ('comparacion -> IDENTIFICADOR MENOR valor','comparacion',3,'p_comparacion','jejeje.py',138),
-  ('comparacion -> IDENTIFICADOR MAYOR valor','comparacion',3,'p_comparacion','jejeje.py',139),
-  ('comparacion -> IDENTIFICADOR MENOR_IGUAL valor','comparacion',3,'p_comparacion','jejeje.py',140),
-  ('valor -> IDENTIFICADOR','valor',1,'p_valor','jejeje.py',146),
-  ('valor -> NUMERO','valor',1,'p_valor','jejeje.py',147),
-  ('argumentos -> argumento','argumentos',1,'p_argumentos','jejeje.py',163),
-  ('argumentos -> argumento COMA argumentos','argumentos',3,'p_argumentos','jejeje.py',164),
-  ('argumentos -> argumento PUNTOCOMA argumentos','argumentos',3,'p_argumentos','jejeje.py',165),
-  ('argumento -> STRING','argumento',1,'p_argumento','jejeje.py',176),
-  ('argumento -> referencia','argumento',1,'p_argumento','jejeje.py',177),
-  ('argumento -> IDENTIFICADOR','argumento',1,'p_argumento','jejeje.py',178),
-  ('argumento -> asignacion','argumento',1,'p_argumento','jejeje.py',179),
-  ('argumento -> incremento','argumento',1,'p_argumento','jejeje.py',180),
-  ('argumento -> comparacion','argumento',1,'p_argumento','jejeje.py',181),
-  ('referencia -> AMPERSON IDENTIFICADOR','referencia',2,'p_referencia','jejeje.py',187),
-  ('incremento -> IDENTIFICADOR MASMAS','incremento',2,'p_incremento','jejeje.py',193),
-  ('operacion -> valor MULT valor','operacion',3,'p_operacion','jejeje.py',199),
-  ('operacion -> valor SUMA valor','operacion',3,'p_operacion','jejeje.py',200),
-  ('operacion -> valor RESTA valor','operacion',3,'p_operacion','jejeje.py',201),
-  ('operacion -> valor DIV valor','operacion',3,'p_operacion','jejeje.py',202),
-  ('retorno -> RESERVADO valor PUNTOCOMA','retorno',3,'p_retorno','jejeje.py',217),
+  ('declaraciones -> declaracion declaraciones','declaraciones',2,'p_declaraciones','jejeje.py',76),
+  ('declaraciones -> declaracion','declaraciones',1,'p_declaraciones','jejeje.py',77),
+  ('declaracion -> asignacion','declaracion',1,'p_declaracion','jejeje.py',86),
+  ('declaracion -> funcion','declaracion',1,'p_declaracion','jejeje.py',87),
+  ('declaracion -> inclusion','declaracion',1,'p_declaracion','jejeje.py',88),
+  ('declaracion -> retorno','declaracion',1,'p_declaracion','jejeje.py',89),
+  ('declaracion -> comparacion','declaracion',1,'p_declaracion','jejeje.py',90),
+  ('inclusion -> RESERVADO RESERVADO','inclusion',2,'p_inclusion','jejeje.py',96),
+  ('funcion -> RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','jejeje.py',102),
+  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO PUNTOCOMA','funcion',5,'p_funcion','jejeje.py',103),
+  ('funcion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque','funcion',5,'p_funcion','jejeje.py',104),
+  ('funcion -> RESERVADO bloque','funcion',2,'p_funcion','jejeje.py',105),
+  ('bloque -> LLAVE_ABIERTA declaraciones LLAVE_CERRADA','bloque',3,'p_bloque','jejeje.py',112),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA','asignacion',5,'p_asignacion','jejeje.py',118),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR valor','asignacion',4,'p_asignacion','jejeje.py',119),
+  ('asignacion -> IDENTIFICADOR ASIGNAR valor','asignacion',3,'p_asignacion','jejeje.py',120),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion','asignacion',4,'p_asignacion','jejeje.py',121),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA','asignacion',5,'p_asignacion','jejeje.py',122),
+  ('asignacion -> IDENTIFICADOR ASIGNAR operacion PUNTOCOMA','asignacion',4,'p_asignacion','jejeje.py',123),
+  ('asignacion -> IDENTIFICADOR ASIGNAR operacion','asignacion',3,'p_asignacion','jejeje.py',124),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA','asignacion',5,'p_asignacion','jejeje.py',125),
+  ('asignacion -> RESERVADO IDENTIFICADOR ASIGNAR cadena','asignacion',4,'p_asignacion','jejeje.py',126),
+  ('asignacion -> IDENTIFICADOR ASIGNAR cadena','asignacion',3,'p_asignacion','jejeje.py',127),
+  ('asignacion -> RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO','asignacion',4,'p_asignacion','jejeje.py',128),
+  ('comparacion -> IDENTIFICADOR MENOR valor','comparacion',3,'p_comparacion','jejeje.py',149),
+  ('comparacion -> IDENTIFICADOR MAYOR valor','comparacion',3,'p_comparacion','jejeje.py',150),
+  ('comparacion -> IDENTIFICADOR MENOR_IGUAL valor','comparacion',3,'p_comparacion','jejeje.py',151),
+  ('comparacion -> IDENTIFICADOR MAYOR_IGUAL valor','comparacion',3,'p_comparacion','jejeje.py',152),
+  ('comparacion -> IDENTIFICADOR IGUAL valor','comparacion',3,'p_comparacion','jejeje.py',153),
+  ('valor -> IDENTIFICADOR','valor',1,'p_valor','jejeje.py',159),
+  ('valor -> NUMERO','valor',1,'p_valor','jejeje.py',160),
+  ('cadena -> STRING','cadena',1,'p_cadena','jejeje.py',176),
+  ('argumentos -> argumento','argumentos',1,'p_argumentos','jejeje.py',182),
+  ('argumentos -> argumento COMA argumentos','argumentos',3,'p_argumentos','jejeje.py',183),
+  ('argumentos -> argumento PUNTOCOMA argumentos','argumentos',3,'p_argumentos','jejeje.py',184),
+  ('argumento -> STRING','argumento',1,'p_argumento','jejeje.py',195),
+  ('argumento -> referencia','argumento',1,'p_argumento','jejeje.py',196),
+  ('argumento -> IDENTIFICADOR','argumento',1,'p_argumento','jejeje.py',197),
+  ('argumento -> asignacion','argumento',1,'p_argumento','jejeje.py',198),
+  ('argumento -> incremento','argumento',1,'p_argumento','jejeje.py',199),
+  ('argumento -> comparacion','argumento',1,'p_argumento','jejeje.py',200),
+  ('referencia -> AMPERSON IDENTIFICADOR','referencia',2,'p_referencia','jejeje.py',206),
+  ('incremento -> IDENTIFICADOR MASMAS','incremento',2,'p_incremento','jejeje.py',212),
+  ('operacion -> valor MULT valor','operacion',3,'p_operacion','jejeje.py',218),
+  ('operacion -> valor SUMA valor','operacion',3,'p_operacion','jejeje.py',219),
+  ('operacion -> valor RESTA valor','operacion',3,'p_operacion','jejeje.py',220),
+  ('operacion -> valor DIV valor','operacion',3,'p_operacion','jejeje.py',221),
+  ('retorno -> RESERVADO valor PUNTOCOMA','retorno',3,'p_retorno','jejeje.py',236),
 ]
