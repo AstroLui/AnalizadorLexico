@@ -61,5 +61,6 @@ def sintactico(texto):
   parsed_code = esprima.parseScript(texto)
   strCode = str(parsed_code)
   print(strCode)
+  return strCode
 
 sintactico(code)

@@ -15,8 +15,9 @@ def home(request):
 def resulHome(request):
     if request.method == 'POST':
         myVar = json.loads(request.body)
+        sintactic_result = sintactico(myVar['data'])
         return JsonResponse({"data" : Data(myVar['data']),
-                             "sint" : sintactico(myVar['data']),
+                             "sint" : sintactic_result,
                              "err" : getArrayErrors(), 
                              "trad" : translate_js_to_py(myVar['data'])})
     return JsonResponse()
