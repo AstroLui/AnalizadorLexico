@@ -28,7 +28,7 @@ tokens = (
 )
 
 # Expresiones regulares para los tokens
-t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let|if|else|Boolean|string|float)'
+t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let|if|else|Boolean|string|float|console.log)'
 t_IDENTIFICADOR = r'([a-z]|[A-Z])+'
 t_STRING = r'"([^"\\]|\\.)*"'
 t_MASMAS = r'\+\+'
@@ -87,6 +87,7 @@ def p_declaracion(p):
                 | retorno
                 | comparacion
                 | condicion
+                | imprimir
     '''
     p[0] ="declaracion → " + p[1]
 
@@ -170,6 +171,12 @@ def p_cadena(p):
     cadena : STRING
     '''
     p[0] = "string → " + str(p[1])
+
+def p_imprimir():
+    '''
+    imprimir : RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
+    '''
+    p[0] = "imprimir → " + " ".join(p[1:])
     
 
 def p_argumentos(p):
