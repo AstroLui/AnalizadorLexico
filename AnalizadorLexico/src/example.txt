@@ -1,7 +1,52 @@
-import esprima
+class People {
+    constructor(name, lastName, idn, tlf, address){
+        this.name = name;
+        this.lastName = lastName;
+        this.idn = idn;
+        this.tlf = tlf;
+        this.address = address;
+    }
 
-# Define your code string
-code = """
+    function getName(){
+      return this.name;
+    }
+    function getLastName()
+    {
+      return this.lastName;
+    }
+    function getIdn()
+    {
+      return this.idn;
+    }
+    function getTlf()
+    {
+        return this.tlf;
+    }
+    function getAddress()
+    {
+        return this.address;
+    }
+    function setName(newName) {
+      this.name = newName;
+    }
+    
+    function setLastName(newLastName) {
+      this.lastName = newLastName;
+    }
+    
+    function setIdn(newIdn) {
+      this.idn = newIdn;
+    }
+    
+    function setTlf(newTlf) {
+      this.tlf = newTlf;
+    }
+    
+    function setAddress(newAddress) {
+      this.address = newAddress;
+    }
+}
+var person = new People
 let number1 = 10;
 let number2 = 20;
 let message = "Hello!";
@@ -55,12 +100,3 @@ console.log("Modified occupation:", person.occupation);
 
 person.city = "New York";
 console.log("New property:", person.city);
-"""
-
-def sintactico(texto):
-  parsed_code = esprima.parseScript(texto)
-  strCode = str(parsed_code)
-  print(strCode)
-  return strCode
-
-sintactico(code)

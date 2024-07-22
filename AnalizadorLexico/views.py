@@ -3,9 +3,8 @@ from django.http import JsonResponse, QueryDict
 from django.views.decorators.csrf import csrf_exempt
 from .src.lexema import Data
 from .src.jejeje import Run, getArrayErrors
-from .src.traductor import js_to_py
-from .src.prueba import sintactico
-from .src.tr2 import translate_js_to_py
+from .src.traductor import translate_js_to_py
+from .src.sintactico import sintactico
 import json
 
 def home(request):

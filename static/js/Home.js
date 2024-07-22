@@ -3,7 +3,6 @@ const codeSpace = document.getElementById("codeSpace");
 function Compilar()
 {
     var datos = document.getElementById("codeSpace").value;
-    console.log(datos);
     var request = new Request('resultado', 
     {
         method: 'POST',
@@ -29,7 +28,7 @@ function Compilar()
 
 function AddCodeSintactico(data){
     var codeSpace = document.getElementById("sintactico");
-    codeSpace.className = "text-sm font-thin"
+    codeSpace.className = "text-sm font-medium"
     codeSpace.innerHTML = `${data}`
 }
 function AddCodeSpace(data){

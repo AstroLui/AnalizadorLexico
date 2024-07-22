@@ -1,270 +1,65 @@
-from ply import lex, yacc
-import json
-variables = {}
+import esprima
 
-tokens = (
-    'NUMERO',
-    'RESERVADO',
-    'IDENTIFICADOR',
-    'STRING',
-    'MASMAS',  # ++
-    'MULT',    # *
-    'IGUAL',   # =
-    'PUNTOCOMA',  # ;
-    'COMA',    # ,
-    'PARENTESIS_ABIERTO',  # (
-    'PARENTESIS_CERRADO',  # )
-    'LLAVE_ABIERTA',  # {
-    'LLAVE_CERRADA',  # }
-    'MENOR',  # <=
-    'MAYOR',
-    'AMPERSON',  # &
-    'ASIGNAR',
-    'SUMA',
-    'RESTA',
-    'DIV',
-    'MENOR_IGUAL',
-    'CONDICIONAL',
-)
+# Define your code string
+code = """
+let number1 = 10;
+let number2 = 20;
+let message = "Hello!";
 
-# Expresiones regulares para los tokens
-t_RESERVADO = r'(int|main|for|return|await|break|case|catch|function|var|let|if|else|Boolean|string|float|console.log)'
-t_IDENTIFICADOR = r'([a-z]|[A-Z])+'
-t_STRING = r'"([^"\\]|\\.)*"'
-t_MASMAS = r'\+\+'
-t_MULT = r'\*'
-t_SUMA = r'\+'
-t_RESTA = r'\-'
-t_DIV = r'/'
-t_ASIGNAR = r'\='
-t_IGUAL = r'\=='
-t_PUNTOCOMA = r'\;'
-t_COMA = r'\,'
-t_PARENTESIS_ABIERTO = r'\('
-t_PARENTESIS_CERRADO = r'\)'
-t_LLAVE_ABIERTA = r'\{'
-t_LLAVE_CERRADA = r'\}'
-t_MENOR = r'\<'
-t_MAYOR = r'\>'
-t_MENOR_IGUAL = r'\<='
-t_AMPERSON = r'\&'
+number1 = 15;
+number2 = number1 + 5;
 
-# Funciones de manejo de tokens
-def t_NUMERO(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
+console.log("Number 1:", number1);
+console.log("Number 2:", number2);
+console.log("Message:", message);
 
-# Ignorar caracteres de espacio en blanco
-t_ignore = ' \t'
+let counter = 0;
+while (counter < 5) {
+  console.log("Counter:", counter);
+  counter++;
+}
 
-# Define a rule so we can track line numbers
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
+let isAdult = false;
+let age = 18;
 
-# Manejo de errores de tokens
-def t_error(t):
-    print("Carácter ilegal →%s←" % t.value[0])
-    t.lexer.skip(1)
+if (age >= 18) {
+  isAdult = true;
+  console.log("You are an adult.");
+} else {
+  console.log("You are not an adult.");
+}
 
-# Definición de las reglas de la gramática
-def p_declaraciones(p):
-    '''
-    declaraciones : declaracion declaraciones
-                  | declaracion
-    '''
-    if len(p) == 3:
-        p[0] ='declaraciones → ' + p[1] + "\n" + p[2]
-    else:
-        p[0] ='declaraciones → ' + p[1]
+let numbers = [1, 2, 3, 4, 5];
 
-def p_declaracion(p):
-    '''
-    declaracion : asignacion
-                | funcion
-                | inclusion
-                | retorno
-                | comparacion
-                | condicion
-                | imprimir
-    '''
-    p[0] ="declaracion → " + p[1]
+console.log("First element:", numbers[0]);
+console.log("Last element:", numbers[numbers.length - 1]);
 
-def p_inclusion(p):
-    '''
-    inclusion : RESERVADO RESERVADO
-    '''
-    p[0] = "inclusion → " + " ".join(p[1:])
+numbers[2] = 10;
+console.log("Modified array:", numbers);
 
-def p_funcion(p):
-    '''
-    funcion : RESERVADO RESERVADO PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-            | RESERVADO RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-            | RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO PARENTESIS_CERRADO bloque
-            | RESERVADO IDENTIFICADOR PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
+for (let i = 0; i < numbers.length; i++) {
+  console.log("Element at index", i, ":", numbers[i]);
+}
 
-    '''
-    p[0] = "funcion → " + " ".join(p[1:])
+let person = {
+  name: "John Doe",
+  age: 30,
+  occupation: "Software Engineer",
+};
 
-def p_condicion(p):
-    '''
-    condicion : RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO bloque
-            | RESERVADO bloque
+console.log("Person's name:", person.name);
+console.log("Person's age:", person.age);
 
-    '''
-    p[0] = "condicion → " + " ".join(p[1:])
+person.occupation = "Web Developer";
+console.log("Modified occupation:", person.occupation);
 
+person.city = "New York";
+console.log("New property:", person.city);
+"""
 
-def p_bloque(p):
-    '''
-    bloque : LLAVE_ABIERTA declaraciones LLAVE_CERRADA
-    '''
-    p[0] = "bloque → " + " ".join(p[1:])
+def sintactico(texto):
+  parsed_code = esprima.parseScript(texto)
+  strCode = str(parsed_code)
+  return strCode
 
-def p_asignacion(p):
-    '''
-    asignacion : RESERVADO IDENTIFICADOR ASIGNAR valor PUNTOCOMA
-               | RESERVADO IDENTIFICADOR ASIGNAR valor
-               | IDENTIFICADOR ASIGNAR valor 
-               | RESERVADO IDENTIFICADOR ASIGNAR operacion
-               | RESERVADO IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR operacion PUNTOCOMA
-               | IDENTIFICADOR ASIGNAR operacion
-               | RESERVADO IDENTIFICADOR ASIGNAR cadena PUNTOCOMA
-               | RESERVADO IDENTIFICADOR ASIGNAR cadena
-               | IDENTIFICADOR ASIGNAR cadena
-               | RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    '''
-    if len(p) == 5:
-        p[0] = ("asignacion", p[2], p[4])  # Guarda la información relevante para el análisis semántico
-    else:
-        p[0] = ("asignacion", p[2], p[4])  # Simplificado para mostrar el proceso
-
-    # Actualiza el diccionario de variables
-    variables[p[2]] = p[4]
-    p[0] = "asignacion → " + " ".join(p[1:])
-
-
-
-def p_comparacion(p):
-    '''
-    comparacion : IDENTIFICADOR MENOR valor
-                | IDENTIFICADOR MAYOR valor
-                | IDENTIFICADOR MENOR_IGUAL valor
-                | IDENTIFICADOR IGUAL valor
-    '''
-    p[0] = "comparacion → " + " ".join(p[1:])
-
-def p_valor(p):
-    '''
-    valor : IDENTIFICADOR
-          | NUMERO
-    '''
-
-    p[0] = p[1] if isinstance(p[1], int) else variables[p[1]]
-
-    p[0] = "valor → " + str(p[1])
-
-def p_cadena(p):
-    '''
-    cadena : STRING
-    '''
-    p[0] = "string → " + str(p[1])
-
-def p_imprimir():
-    '''
-    imprimir : RESERVADO PARENTESIS_ABIERTO argumentos PARENTESIS_CERRADO
-    '''
-    p[0] = "imprimir → " + " ".join(p[1:])
-    
-
-def p_argumentos(p):
-    '''
-    argumentos : argumento
-               | argumento COMA argumentos
-               | argumento PUNTOCOMA argumentos
-    '''
-    if len(p) == 2:
-        p[0] = p[1]
-    elif len(p) == 4 and p[2] == ',':
-        p[0] = p[1] + " " +p[2] + " " + p[3]
-    elif len(p) == 4 and p[2] == ';':
-        p[0] = p[1] + " " +p[2] + " " + p[3]
-
-def p_argumento(p):
-    '''
-    argumento : STRING
-              | referencia
-              | IDENTIFICADOR
-              | asignacion
-              | incremento
-              | comparacion
-    '''
-    p[0] = "argumento → " + str(p[1])
-
-def p_referencia(p):
-    '''
-    referencia : AMPERSON IDENTIFICADOR
-    '''
-    p[0] = "referencia → " + " ".join(p[1:])
-
-def p_incremento(p):
-    '''
-    incremento : IDENTIFICADOR MASMAS
-    '''
-    p[0] = "incremento → " + " ".join(p[1:])
-
-def p_operacion(p):
-    '''
-    operacion : valor MULT valor
-              | valor SUMA valor
-              | valor RESTA valor
-              | valor DIV valor
-    '''
-    if p[1] == 'MULT':
-        p[0] = p[1] * p[3]
-    elif p[1] == 'SUMA':
-        p[0] = p[1] + p[3]
-    elif p[1] == 'RESTA':
-        p[0] = p[1] - p[3]
-    elif p[1] == 'DIV':
-        p[0] = p[1] / p[3]
-        
-    p[0] = "operacion → " + " ".join(p[1:])
-
-def p_retorno(p):
-    '''
-    retorno : RESERVADO valor PUNTOCOMA
-    '''
-    p[0] = "retorno → " + " ".join(p[1:])
-
-# Manejo de errores sintácticos
-def p_error(p):
-    if p:
-        print(f"Error de sintaxis en la entrada. Token inesperado: {p.value}"+ " en la línea " + str(p.lineno))
-    else:
-        print("Error de sintaxis en la entrada. Final inesperado.")
-
-# Construir el lexer
-lexer = lex.lex()
-
-# Cadena de entrada
-
-def Run(input_string):
-    testData = "".join(input_string)
-    print(testData)
-    # Darle la cadena de entrada al lexer
-    lexer.input(testData)
-
-    # Iterar sobre los tokens encontrados para imprimir el analisis lexico
-    for token in lexer:
-        print(f'Token: {token.type}, Valor: {token.value}, Línea: {token.lineno}')
-
-    # Construir el parser
-    parser = yacc.yacc(debug=True)
-
-    # Analizar la cadena de entrada
-    result = parser.parse(testData)
-    print(result)
-    return result
+sintactico(code)
