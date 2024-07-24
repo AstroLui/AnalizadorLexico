@@ -109,8 +109,11 @@ console.log("New property:", person.city);
 """
 
 def sintactico(texto):
-  parsed_code = esprima.parseScript(texto)
-  strCode = str(parsed_code)
+  try:
+    parsed_code = esprima.parseScript(texto)
+    strCode = str(parsed_code)
+  except: 
+    return 
   return strCode
 
 print(sintactico(code))

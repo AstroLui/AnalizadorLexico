@@ -16,20 +16,12 @@ function Compilar()
             tokens = data;
             console.log(tokens)
             AddCodeSpace(tokens['data']);
-            AddCodeSintactico(tokens['sint']);
-            errorSemantica(tokens['err']);
             traductor(tokens['trad']);
         })
     .catch(error =>{
         console.log(error);
     })
 
-}
-
-function AddCodeSintactico(data){
-    var codeSpace = document.getElementById("sintactico");
-    codeSpace.className = "text-sm font-medium"
-    codeSpace.innerHTML = `${data}`
 }
 function AddCodeSpace(data){
     var codeSpaceMirror = document.getElementById("codeSpaceMirror");
@@ -99,17 +91,6 @@ function newLineEmpty(nodeFather, iLine){
     nodeFather.appendChild(code); 
 }
 
-function errorSemantica(data){
-    const semantico = document.getElementById('semantico');
-    semantico.innerHTML= ``;
-    Object.entries(data).forEach(data =>{
-        console.log(data)
-        const div = document.createElement('span')
-        div.className = 'text-2xl font-normal badge badge-neutral'
-        div.innerHTML = data[1]
-        semantico.appendChild(div)
-    })
-}
 function traductor(data){
     const traductor = document.getElementById('codeTraductor');
     traductor.innerHTML = ``
